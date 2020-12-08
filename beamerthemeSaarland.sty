@@ -1,0 +1,58 @@
+
+
+
+\mode<presentation>
+
+\DeclareOptionBeamer{background}{\PassOptionsToPackage{background=#1}{beamerouterthemeSaarland}}
+\DeclareOptionBeamer{logo}{\PassOptionsToPackage{logo=#1}{beamerouterthemeSaarland}}
+\ProcessOptionsBeamer
+
+
+
+\usecolortheme{Saarland}	% calls beamercolorthemeSaarland.sty
+\useinnertheme{Saarland}	% calls beamerinnerthemeSaarland.sty
+\useoutertheme{Saarland}	% calls beamerouterthemeSaarland.sty
+% \useoutertheme{smoothbars}
+
+\setbeamertemplate{navigation symbols}{} 	% turn off pdf navigation symbols
+
+\AtBeginSection[]{%
+	\ifnum \value{section}>1
+	  \begin{frame}[plain]
+	    \tableofcontents[currentsection,hideothersubsections]
+	  \end{frame}
+	  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+	\else
+	\fi
+}
+
+\usefonttheme{Saarland}		% calls beamerfontthemeSaarland.sty
+
+\mode<all>
+
+% Bibliography
+\usepackage[style=authoryear, firstinits=true, maxcitenames=2, maxbibnames=99, backend=biber, natbib]{biblatex}
+\AtEveryCite{\color{solidpink}}
+\renewbibmacro{in:}{%  % remove the "In:"
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+\newcommand\blfootnote[1]{%
+  \begingroup
+  \renewcommand\thefootnote{}\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \endgroup
+}
+\renewcommand*{\mkbibacro}[1]{#1}
+\setbeamertemplate{bibliography item}{\makebox[0.5cm]{$\circ$}}
+
+
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{theorem}[ams style]
+%\numberwithin{theorem}{subsection}
+\addtobeamertemplate{theorem begin}{\normalfont}{}
+\newenvironment{example*}
+  {\addtocounter{theorem}{-1}\example}
+  {\endexample}  % https://tex.stackexchange.com/questions/122880/continuing-example-counters-in-beamer
+\newtheorem{prop}{Proposition}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+
