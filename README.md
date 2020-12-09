@@ -1,6 +1,7 @@
 # UBD Beamer Theme
 
 This is the unofficial beamer theme designed for [Universiti Brunei Darussalam](https://ubd.edu.bn), featuring a minimalistic design and a pastel-ised palette taken from UBD's colours.
+View the [PDF slides](https://github.com/haziqj/ubd-beamer/blob/main/slides.pdf).
 
 <div style="float:left">
   <img src="images/slides-1.tiff" width="45%" border=0>
@@ -8,8 +9,6 @@ This is the unofficial beamer theme designed for [Universiti Brunei Darussalam](
   <img src="images/slides-3.tiff" width="45%" border=0>
   <img src="images/slides-4.tiff" width="45%" border=0>
 </div>
-
-View the [PDF slides](https://github.com/haziqj/ubd-beamer/blob/main/slides.pdf).
 
 ## Usage
 
