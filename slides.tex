@@ -4,22 +4,41 @@
 % remove the options if you do not want to have them
 \usetheme[
 %	background=saarland,
-	logo=ubd
-]{saarland}
+%	logo=ubd
+]{ubd}
 
 % the background and logo are in the images directory
 \graphicspath{{images/}}
 
 
+% to use arabic language and arabic fonts
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
+\setotherlanguage{arabic}
+\newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
 
+% Fix for footnotes not showing when arabic script used
+% https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
+\makeatletter
+\let\@footnotetext=\beamer@framefootnotetext
+\makeatother
 
+% Bibliography
+\usepackage[style=authoryear, firstinits=true, maxcitenames=2, maxbibnames=99, backend=biber, natbib]{biblatex}
+% \AtEveryCite{\color{turquoise!40!black}}
+\renewbibmacro{in:}{%  % remove the "In:"
+  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
 \addbibresource{/Users/haziqj/Desktop/GitHub/ubd-beamer/refs.bib}
+
+% Fix URL, DOI, ISBN, etc. font in biblatex
+% https://tex.stackexchange.com/questions/416093/change-font-of-the-word-url-before-the-actual-url-in-biblatex
+\renewcommand*{\mkbibacro}[1]{#1}  
 
 % information for the title page
 \author{Haziq Jamil}
 \title{UBD Beamer Theme}
-\subtitle{An unofficial theme for \textit{Universiti Brunei Darussalam}\\ \url{https://haziqj.ml}}
-\institute{Mathematical Sciences, Faculty of Science, UBD}
+\subtitle{An unofficial theme for \textit{Universiti Brunei Darussalam}}
+\institute{Mathematical Sciences, Faculty of Science, UBD\\ \url{https://haziqj.ml}}
 \date{\today}
 
 \begin{document}
@@ -41,7 +60,7 @@
 
 The UBD Beamer Theme is a modern and minimal theme designed for getting information across in a clean and uncluttered manner.\\[1em]
 
-This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarland}{Saarland Beamer Theme}, with its logos and fonts changed, and colour scheme adapted to UBD's pastel-ised colour scheme. 
+This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarland}{Saarland Beamer Theme}, with its logos and fonts changed, and colour scheme adapted to UBD's pastel-ised colour scheme.
 	
 \end{frame}
 
@@ -126,14 +145,14 @@ Archimedes will be remembered when Aeschylus is forgotten, because languages die
 
 \begin{frame}{Colour scheme}
 
-\begin{itemize}
-	\item {\color{navyblue} Frame titles: \texttt{navyblue}}
-	\item  {\color{gray} Structure: \texttt{gray}}
-	\item  {\color{solidpink} Alerted text: \texttt{solidpink}}
-	\item  {\color{charcoal} Standard block: \texttt{charcoal}}
-	\item  {\color{turquoise!60!black} Example block: \texttt{turquoise!60!black}}
-
-\end{itemize}
+%\begin{itemize}
+%	\item {\color{navyblue} Frame titles: \texttt{navyblue}}
+%	\item  {\color{gray} Structure: \texttt{gray}}
+%	\item  {\color{solidpink} Alerted text: \texttt{solidpink}}
+%	\item  {\color{charcoal} Standard block: \texttt{charcoal}}
+%	\item  {\color{turquoise!60!black} Example block: \texttt{turquoise!60!black}}
+%
+%\end{itemize}
 
 \end{frame}
 
@@ -185,7 +204,7 @@ Using the pmf given in \eqref{eq:pois}, we can derive the moment generating func
 \end{frame}
 
 \begin{frame}{A maths example}
-	Maths examples are numbered (using the \texttt{example} environment).
+	Maths examples are continuously numbered (using the \texttt{example} environment).
 	
 	\begin{example}[Examples of prime numbers]
 		2, 3, 5, 7 and 11 are examples of prime numbers.
@@ -200,7 +219,7 @@ Using the pmf given in \eqref{eq:pois}, we can derive the moment generating func
 \section{Citations}
 
 \begin{frame}{Citations}
-	The \texttt{biblatex} package is pre-loaded in this theme.\\[1em]
+	\blfootnote{The \texttt{biblatex} package is highly suggested. This footnote was created using the custom \texttt{\textbackslash blfootnote\{\}} command.}
 	
 	The importance of grounding one's self in elementary probability theory and mathematical statistics cannot be overstated.
 	Here are some excellent fundamental textbooks every student of statistics should read: \citet{casella2002statistical,	pawitan2001all, wasserman2013all}.
@@ -212,7 +231,11 @@ Using the pmf given in \eqref{eq:pois}, we can derive the moment generating func
 
 \end{frame}
 
+\section{Conclusion}
 
+\begin{frame}{Conclusion}
+	To use this theme, download the \texttt{.sty} files and image files (for the logo and banner) from \url{https://github.com/haziqj/ubd-beamer}.
+\end{frame}
 
 \begin{frame}[plain,noframenumbering]{End}
 \centering

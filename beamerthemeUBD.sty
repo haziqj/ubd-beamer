@@ -1,0 +1,113 @@
+
+\ProvidesPackage{beamerthemeubd}[2020/12/09]
+
+\mode<presentation>
+
+\DeclareOptionBeamer{background}{\PassOptionsToPackage{background=#1}{beamerouterthemeSaarland}}
+\DeclareOptionBeamer{logo}{\PassOptionsToPackage{logo=#1}{beamerouterthemeSaarland}}
+\ProcessOptionsBeamer
+
+% COLOUR THEME -----------------------------------------------------------
+\definecolor{navyblue}{RGB}{0, 47, 92}
+\definecolor{turquoise}{RGB}{85, 179, 162}
+\definecolor{brightsky}{RGB}{0, 176, 223}
+\definecolor{lightred}{RGB}{196, 91, 46}
+\definecolor{violet}{RGB}{73, 0, 130}
+\definecolor{charcoal}{RGB}{54,69,79}
+\definecolor{gray}{RGB}{128, 128, 128}
+\definecolor{americanrose}{RGB}{1.0, 0.01, 0.24}
+\definecolor{catawba}{RGB}{99, 44, 56}
+\definecolor{cinnamonsatin}{RGB}{185, 100, 119}
+\definecolor{solidpink}{HTML}{8E3B46}
+\definecolor{queenpink}{HTML}{EAD1D6}
+
+\definecolor{orangecrayola}{HTML}{FFD166}
+\definecolor{paradisepink}{HTML}{EF476F}
+\definecolor{myrtlegreen}{HTML}{346B61}
+\definecolor{lightcyan}{HTML}{CCE8E3}
+
+% Main colours
+\setbeamercolor{structure}{fg=gray, bg=white}
+\setbeamercolor{frametitle}{fg=navyblue}
+\setbeamercolor{framesubtitle}{fg=navyblue}
+\setbeamercolor{alerted text}{fg=solidpink}
+
+% Block colours
+\setbeamercolor{block title}{fg=gray!30!white,bg=charcoal}
+\setbeamercolor{block body}{parent=normal text,bg=gray!20,fg=charcoal}
+
+\setbeamercolor{block title example}{fg=lightcyan,bg=myrtlegreen}
+\setbeamercolor{block body example}{parent=normal text,bg=lightcyan,fg=myrtlegreen}
+
+\setbeamercolor{block title alerted}{fg=queenpink,bg=solidpink}
+\setbeamercolor{block body alerted}{parent=normal text,bg=queenpink, fg=solidpink}
+
+\setbeamercolor{title}{fg=navyblue}
+\setbeamercolor{subtitle}{fg=navyblue}
+
+\setbeamercolor{bibliography entry author}{fg=charcoal}
+\setbeamercolor{bibliography entry title}{fg=charcoal}
+\setbeamercolor{bibliography entry location}{fg=gray}
+\setbeamercolor{bibliography entry note}{fg=gray}
+
+
+\useinnertheme{Saarland}	% calls beamerinnerthemeSaarland.sty
+\useoutertheme{Saarland}	% calls beamerouterthemeSaarland.sty
+% \useoutertheme{smoothbars}
+
+\setbeamertemplate{navigation symbols}{} 	% turn off pdf navigation symbols
+
+
+
+
+% FONT THEME -----------------------------------------------------------
+% Maths fonts
+\usepackage{cmbright}
+\usefonttheme{professionalfonts}
+
+% Use default font themes
+\usefonttheme{default}
+
+\setbeamerfont{title}{series=\bfseries, size=\LARGE}  %family=\rmfamily, 
+\setbeamerfont{subtitle}{series=\mdseries, size=\large}
+
+\setbeamerfont{frametitle}{series=\bfseries, size=\Large}
+\setbeamerfont{framesubtitle}{series=\mdseries, size=\large}
+
+
+% Bibliography
+\setbeamertemplate{bibliography item}{\makebox[0.47cm]{$\circ$}}
+
+% Mathematics
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{theorem}[ams style]
+%\numberwithin{theorem}{subsection}
+\addtobeamertemplate{theorem begin}{\normalfont}{}
+\newenvironment{example*}
+  {\addtocounter{theorem}{-1}\example}
+  {\endexample}  % https://tex.stackexchange.com/questions/122880/continuing-example-counters-in-beamer
+\newtheorem{prop}{Proposition}
+\renewcommand{\qedsymbol}{$\blacksquare$}
+
+% Transition slides before each section (except first section)
+\AtBeginSection[]{%
+	\ifnum \value{section}>1
+	  \begin{frame}[plain]
+	    \tableofcontents[currentsection,hideothersubsections]
+	  \end{frame}
+	  \addtocounter{framenumber}{-1}% If you don't want them to affect the slide number
+	\else
+	\fi
+}
+
+% Custom footnote command
+% https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+\makeatletter
+\def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+\makeatother
+
+\mode<all>
+
+
+
+

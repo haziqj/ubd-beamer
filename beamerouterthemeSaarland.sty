@@ -9,16 +9,16 @@
 \ExecuteOptionsBeamer{logo=} % Default value is empty
 \ProcessOptionsBeamer
 
-% footer has a uds logo and shows page number only
-\setbeamertemplate{footline}
-{%
-	\leavevmode%
-	\hbox{%
-		\begin{beamercolorbox}[wd=0.98\paperwidth,ht=2.25ex,dp=1ex,right]{pagenumber}%
-			\insertframenumber{} / \inserttotalframenumber %\hspace*{1ex}
-		\end{beamercolorbox}
-	}%
-}
+% % footer has a uds logo and shows page number only
+% % \setbeamertemplate{footline}
+% % {%
+% % 	\leavevmode%
+% % 	\hbox{%
+% % 		\begin{beamercolorbox}[wd=0.98\paperwidth,ht=2.25ex,dp=1ex,right]{pagenumber}%
+% % 			\insertframenumber{} / \inserttotalframenumber %\hspace*{1ex}
+% % 		\end{beamercolorbox}
+% % 	}%
+% % }
 
 \setbeamertemplate{footline}
 {%
@@ -27,26 +27,26 @@
 		\begin{beamercolorbox}[wd=0.98\paperwidth,ht=4.25ex,dp=2ex,left]{pagenumber}%
 			\hspace*{1ex} \insertframenumber{} / \inserttotalframenumber
 		\end{beamercolorbox}
-		% \if \beamer@Saarland@logo\@empty
-		% \else
+		\if \beamer@Saarland@logo\@empty
+		\else
 			\llap{\includegraphics[height=0.3cm]{\beamer@Saarland@logo}}
-		% \fi
+		\fi
 	}%
 }
 
-% we insert the watermark background from the sidebar
-\setbeamertemplate{sidebar right}
-{
-	% \vskip5\beamer@leftmargin%
-		% \vfill%
-  % \llap{\includegraphics[height=0.4cm]{\beamer@Saarland@logo}\hspace{2em}}
-	\if \beamer@Saarland@background\@empty
-	\else
-		\vskip.1\beamer@leftmargin%
-		\vfill%
-		\llap{\includegraphics[width=.5\paperwidth,height=.5\paperheight]{\beamer@Saarland@background}}
-	\fi
-}
+% % we insert the watermark background from the sidebar
+% \setbeamertemplate{sidebar right}
+% {
+% 	% \vskip5\beamer@leftmargin%
+% 		% \vfill%
+%   % \llap{\includegraphics[height=0.4cm]{\beamer@Saarland@logo}\hspace{2em}}
+% 	\if \beamer@Saarland@background\@empty
+% 	\else
+% 		\vskip.1\beamer@leftmargin%
+% 		\vfill%
+% 		\llap{\includegraphics[width=.5\paperwidth,height=.5\paperheight]{\beamer@Saarland@background}}
+% 	\fi
+% }
 
 % customisation for the title page
 \setbeamertemplate{title page}
