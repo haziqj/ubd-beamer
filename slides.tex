@@ -1,18 +1,24 @@
-% the sample slide is created with 16:9 aspect ratio
 \documentclass[]{beamer}
 
-% remove the options if you do not want to have them
+% Options for the UBD theme
 \usetheme[
-%	background=saarland,
-%	logo=ubd
+%	progressdots,  % provides progress dots by sections at the top of each slide
+	transitions,  % provides transition slides between sections
+	banner,  % provides the UBD banner (ubd_banner.png) on the title slide
+	logo  % provides the UBD logo (ubd.jpg) in the footers
 ]{ubd}
 
-% the background and logo are in the images directory
-\graphicspath{{images/}}
+% information for the title page
+\author{Haziq Jamil}
+\title{UBD Beamer Theme}
+\subtitle{An unofficial theme for \textit{Universiti Brunei Darussalam}}
+\institute{Mathematical Sciences, Faculty of Science, UBD\\ \url{https://haziqj.ml}}
+\date{\today}
 
-
-% to use arabic language and arabic fonts
-\usepackage{polyglossia}
+% Packages 
+\usepackage{lipsum}
+\usepackage{csquotes}
+\usepackage{polyglossia}  % to use arabic
 \setdefaultlanguage{english}
 \setotherlanguage{arabic}
 \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
@@ -24,43 +30,30 @@
 \makeatother
 
 % Bibliography
-\usepackage[style=authoryear, firstinits=true, maxcitenames=2, maxbibnames=99, backend=biber, natbib]{biblatex}
-% \AtEveryCite{\color{turquoise!40!black}}
-\renewbibmacro{in:}{%  % remove the "In:"
-  \ifentrytype{article}{}{\printtext{\bibstring{in}\intitlepunct}}}
+\usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
 \addbibresource{/Users/haziqj/Desktop/GitHub/ubd-beamer/refs.bib}
 
 % Fix URL, DOI, ISBN, etc. font in biblatex
 % https://tex.stackexchange.com/questions/416093/change-font-of-the-word-url-before-the-actual-url-in-biblatex
 \renewcommand*{\mkbibacro}[1]{#1}  
 
-% information for the title page
-\author{Haziq Jamil}
-\title{UBD Beamer Theme}
-\subtitle{An unofficial theme for \textit{Universiti Brunei Darussalam}}
-\institute{Mathematical Sciences, Faculty of Science, UBD\\ \url{https://haziqj.ml}}
-\date{\today}
-
 \begin{document}
 
-% use plain option to remove the page number from the title slide
-\begin{frame}[plain]
+\begin{frame}[plain,noframenumbering]
 	\titlepage
 \end{frame}
 
 \begin{frame}{Overview}
-\tableofcontents
+	\tableofcontents
 \end{frame}
-
-
 
 \section{Introduction}
 
 \begin{frame}{Introduction}
 
-The UBD Beamer Theme is a modern and minimal theme designed for getting information across in a clean and uncluttered manner.\\[1em]
-
-This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarland}{Saarland Beamer Theme}, with its logos and fonts changed, and colour scheme adapted to UBD's pastel-ised colour scheme.
+	The UBD Beamer Theme is a modern and minimal theme designed for getting information across in a clean and uncluttered manner.\\[1em]
+	
+	This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarland}{Saarland Beamer Theme}, with its logos and fonts changed, and colour scheme adapted to UBD's pastel-ised colour scheme.
 	
 \end{frame}
 
@@ -70,7 +63,7 @@ This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarl
 
 \begin{frame}{Slide full of lists}
 
-\textit{Universiti Brunei Darussalam} (UBD; translation University of Brunei Darussalam; Jawi: \textarabic{يونيبرسيتي بروني دارالسلام}) is the first university in Brunei.
+	\textit{Universiti Brunei Darussalam} (UBD; translation University of Brunei Darussalam; Jawi: \textarabic{يونيبرسيتي بروني دارالسلام}) is the first university in Brunei.
 
 	\begin{itemize}
 		\item UBD in figures
@@ -95,7 +88,8 @@ This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarl
 \subsection{Blocks}
 
 \begin{frame}{Blocks}
-	\framesubtitle{This is a subtitle}
+\framesubtitle{This is a subtitle}
+
 	\begin{block}{Standard Block}
 		This is a standard block using the \texttt{block} environment.
 	\end{block}
@@ -107,15 +101,17 @@ This theme is based on the \href{https://github.com/kailashbuki/beamerthemesaarl
 	\begin{alertblock}{Alert Block}
 		This is an alert block using the \texttt{alertblock} environment.
 	\end{alertblock}
+	
 \end{frame}
 
 \subsection{Quotes}
 
-\begin{frame}[label=quot]{Quotation}
-\begin{quote}
-Archimedes will be remembered when Aeschylus is forgotten, because languages die and mathematical ideas do not. ``Immortality'' may be a silly word, but probably a mathematician has the best chance of whatever it may mean.
-\end{quote}
-\hfill --- G. H. Hardy in \textit{A Mathematician's Apology, 1941}
+\begin{frame}{Quotation}
+
+	\begin{quote}
+		Archimedes will be remembered when Aeschylus is forgotten, because languages die and mathematical ideas do not. ``Immortality'' may be a silly word, but probably a mathematician has the best chance of whatever it may mean.
+	\end{quote}
+	\hfill --- G. H. Hardy in \textit{A Mathematician's Apology, 1941}
 
 \end{frame}
 
@@ -141,69 +137,69 @@ Archimedes will be remembered when Aeschylus is forgotten, because languages die
 		\end{columns}
 	\end{frame}
 
-\subsection{Colour scheme}
+\subsection{Colour palette}
 
-\begin{frame}{Colour scheme}
+\begin{frame}{Colour palette}
 
-%\begin{itemize}
-%	\item {\color{navyblue} Frame titles: \texttt{navyblue}}
-%	\item  {\color{gray} Structure: \texttt{gray}}
-%	\item  {\color{solidpink} Alerted text: \texttt{solidpink}}
-%	\item  {\color{charcoal} Standard block: \texttt{charcoal}}
-%	\item  {\color{turquoise!60!black} Example block: \texttt{turquoise!60!black}}
-%
-%\end{itemize}
+\begin{itemize}
+	\item {\color{navyblue} Frame titles: \texttt{navyblue}}
+	\item {\color{gray} Structure: \texttt{gray}}
+	\item {\color{charcoal} Standard block: \texttt{charcoal}}
+	\item {\color{solidpink} Alerted block: \texttt{solidpink}}
+	\item {\color{queenpink} Alerted block bg: \texttt{queenpink}}
+	\item {\color{myrtlegreen} Example block: \texttt{myrtlegreen}}
+	\item {\color{lightcyan} Example block: \texttt{lightcyan}}
+	\item {\color{orangecrayola} Misc 1: \texttt{orangecrayola}}
+	\item {\color{paradisepink} Misc 2: \texttt{paradisepink}}
+\end{itemize}
 
 \end{frame}
 
-
 \section{Mathematics}
-
-
 
 \begin{frame}{Mathematics}
 
-Let $X\sim\mathrm{Pois}(\lambda)$. 
-The probability mass function of $X$ is given by
-\begin{align}\label{eq:pois}
-	\Pr(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}.
-\end{align}
-Using the pmf given in \eqref{eq:pois}, we can derive the moment generating function for $X$ to be:
-\begin{align*}
-	M_X(t) 
-	&= \sum_{k=0}^\infty e^{tx} \cdot \frac{e^{-\lambda}\lambda^x}{x!} \\
-	&= e^{-\lambda} \sum_{k=0}^\infty  \frac{(\lambda e^t)^x}{x!} \\
-	&= e^{-\lambda}  e^{\lambda e^t} \\
-	&= \exp\{\lambda(e^t - 1) \}.
-\end{align*}
-
+	Let $X\sim\mathrm{Pois}(\lambda)$. 
+	The probability mass function of $X$ is given by
+	\begin{align}\label{eq:pois}
+		\Pr(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}.
+	\end{align}
+	Using the pmf given in \eqref{eq:pois}, we can derive the moment generating function for $X$ to be:
+	\begin{align*}
+		M_X(t) 
+		&= \sum_{k=0}^\infty e^{tx} \cdot \frac{e^{-\lambda}\lambda^x}{x!} \\
+		&= e^{-\lambda} \sum_{k=0}^\infty  \frac{(\lambda e^t)^x}{x!} \\
+		&= e^{-\lambda}  e^{\lambda e^t} \\
+		&= \exp\{\lambda(e^t - 1) \}.
+	\end{align*}
 
 \end{frame}
 
 \begin{frame}{Theorems et al.}
 
-\begin{definition}[Prime numbers]
-	A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
-\end{definition}
-
-\begin{theorem}[Infinitude of primes]
-	There are an infinite number of prime numbers.
-\end{theorem}
-
-\begin{proof}
-	Suppose that there exist only a finite number of primes, $p_1,\dots,p_n$, say.
-	The number 
-	\[
-	  N = 1+p_1\cdots p_n
-	\]
-	is divisible by some prime $p$.
-	But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
-	This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
-\end{proof}
+	\begin{definition}[Prime numbers]
+		A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
+	\end{definition}
+	
+	\begin{theorem}[Infinitude of primes]
+		There are an infinite number of prime numbers.
+	\end{theorem}
+	
+	\begin{proof}
+		Suppose that there exist only a finite number of primes, $p_1,\dots,p_n$, say.
+		The number 
+		\[
+		  N = 1+p_1\cdots p_n
+		\]
+		is divisible by some prime $p$.
+		But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
+		This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
+	\end{proof}
 
 \end{frame}
 
 \begin{frame}{A maths example}
+
 	Maths examples are continuously numbered (using the \texttt{example} environment).
 	
 	\begin{example}[Examples of prime numbers]
@@ -219,11 +215,11 @@ Using the pmf given in \eqref{eq:pois}, we can derive the moment generating func
 \section{Citations}
 
 \begin{frame}{Citations}
+
 	\blfootnote{The \texttt{biblatex} package is highly suggested. This footnote was created using the custom \texttt{\textbackslash blfootnote\{\}} command.}
 	
 	The importance of grounding one's self in elementary probability theory and mathematical statistics cannot be overstated.
 	Here are some excellent fundamental textbooks every student of statistics should read: \citet{casella2002statistical,	pawitan2001all, wasserman2013all}.
-	
 	
 	\begin{alertblock}{Warning}
 		Using fancy tools like neural nets, boosting, and support vector machines without understanding basic statistics is like doing brain surgery before knowing how to use a band-aid \citep{wasserman2013all}.
@@ -234,19 +230,50 @@ Using the pmf given in \eqref{eq:pois}, we can derive the moment generating func
 \section{Conclusion}
 
 \begin{frame}{Conclusion}
-	To use this theme, download the \texttt{.sty} files and image files (for the logo and banner) from \url{https://github.com/haziqj/ubd-beamer}.
+	To use this theme, download the \texttt{.sty} files and image files (for the logo and banner) from \url{https://github.com/haziqj/ubd-beamer}, and place the files together with your \TeX source files. Use the sample \texttt{slides.tex} as a guide.
 \end{frame}
 
 \begin{frame}[plain,noframenumbering]{End}
-\centering
+	\centering
 	\Huge Thank you!
 \end{frame}
 
-\nocite{*}
+\begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
+	\printbibliography[heading=none]
+\end{frame}
 
-    \begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
-    \printbibliography[heading=none]
-    \end{frame}
+% BACKUP SLIDES -----------------------------------------------------------------------------------------
+\appendix
+\backupbegin
 
+\section{What this is}
+
+\begin{frame}{Backup slides}
+
+	Often times in a presentation, we don't have enough time to present everything, but it's a good idea to prepare backup slides in case the audience asks about it afterwards.\\[1em]
+	
+	We can achieve that using the \texttt{\textbackslash appendix} usage.
+	
+\end{frame}
+
+\section{Backup topic 1}
+
+\begin{frame}{Backup topic 1}
+
+	\lipsum[1]
+	
+\end{frame}
+
+\section{Backup topic 2}
+
+\begin{frame}{Backup topic 2}
+
+	\begin{block}{A block}
+		\lipsum[4]
+	\end{block}
+
+\end{frame}
+
+\backupend
 
 \end{document}
