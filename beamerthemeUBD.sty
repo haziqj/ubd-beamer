@@ -73,6 +73,18 @@
 
 \setbeamertemplate{navigation symbols}{} 	% turn off pdf navigation symbols
 
+% Continuation after frame breaks
+\setbeamertemplate{frametitle continuation}{}
+% \newcounter{cont}
+% \makeatletter
+% \setbeamertemplate{frametitle continuation}{%
+% 	\setcounter{cont}{\beamer@endpageofframe}%
+% 	\addtocounter{cont}{1}%
+% 	\addtocounter{cont}{-\beamer@startpageofframe}%
+%     (\insertcontinuationcount/\arabic{cont})%
+% }% end frame title continuation
+% \makeatother
+
 % Text margins
 \setbeamersize{text margin left=0.33cm}
 \setbeamersize{text margin right=0.33cm}
@@ -258,6 +270,8 @@
 	\addtocounter{framenumbervorappendix}{-\value{framenumber}}
 	\addtocounter{framenumber}{\value{framenumbervorappendix}} 
 }
+
+
 
 % Custom footnote command
 % https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
