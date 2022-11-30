@@ -15,10 +15,8 @@ output:
     pandoc_args: ["--lua-filter=luafilters/mycustom.lua", "--lua-filter=luafilters/bookdown.lua"] 
 aspectratio: 43
 toc: true
-toctitle: "Overview"
+toctitle: Overview
 tocmulticol: 
-banner: true
-logo: true
 progressdots: false
 handout: false
 bibliography: refs.bib
@@ -243,7 +241,7 @@ summary(cars)
 
 ### Slide with Plot
 
-```{r pressure, echo = TRUE, fig.height = 3}
+```{r slideplot, echo = TRUE, fig.height = 3}
 ggplot(tibble(x = rnorm(100), y = rnorm(100)), aes(x, y)) +
   geom_point()
 ```
