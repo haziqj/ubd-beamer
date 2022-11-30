@@ -1,10 +1,14 @@
 \documentclass[$if(handout)$handout,$endif$,$if(aspectratio)$aspectratio=$aspectratio$$endif$]{beamer}
 
-% Load theme ---------------------------------------------------------------------------------
+\usepackage{empheq}
+\usepackage{ragged2e}
 
+% ------------------------------------------------------------------------------
+% Load theme -------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 \usetheme[$if(progressdots)$progressdots,$endif$$if(transitions)$transitions,$endif$$if(banner)$banner,$endif$$if(logo)$logo$endif$]{ubd}
 
-% Information for the title page -------------------------------------------------------------
+% Information for the title page -----------------------------------------------
 $if(author)$
 \author{$author$}
 $endif$
@@ -31,7 +35,7 @@ $else$
 \date{\today}
 $endif$
 
-% Font fix -----------------------------------------------------------------------------------
+% Font fix ---------------------------------------------------------------------
 % \usepackage{ifxetex,ifluatex}
 % \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
 %   \usepackage[T1]{fontenc}
@@ -43,7 +47,22 @@ $endif$
 %   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 % \fi
 
-% knitr stuff --------------------------------------------------------------------------------
+\usepackage{soul}
+\makeatletter
+\let\HL\hl
+\renewcommand\hl{%
+  \let\set@color\beamerorig@set@color
+  \let\reset@color\beamerorig@reset@color
+  \HL}
+\makeatother
+% https://tex.stackexchange.com/questions/460731/highlight-color-a-part-of-text-in-block-in-beamer
+\newcommand{\hlc}[2][yellow]{{%
+    \colorlet{foo}{#1}%
+    \sethlcolor{foo}\hl{#2}}%
+}
+% https://tex.stackexchange.com/questions/352956/how-to-highlight-text-with-an-arbitrary-color
+
+% knitr stuff ------------------------------------------------------------------
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -102,39 +121,62 @@ $endif$
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
-% Packages -----------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% Packages ---------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+% \setlength{\parskip}{1em}
 \usepackage{tikz}
+\usetikzlibrary{shapes.geometric,fit,arrows.meta}
 \usepackage{xltabular}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,multirow,multicol,colortbl}
+
 \usepackage{caption}
 % Make caption package work with longtable
 \makeatletter
 \def\fnum@table{\tablename~\thetable}
 \makeatother
+
 \usepackage{lipsum}
 \usepackage{csquotes}
-\usepackage{polyglossia}  % to use arabic
+
+% To use arabic ----------------------------------------------------------------
+% WARNING: Using arabic script causes some issues with footnotes.
+% Packages are not loaded by default
+\usepackage{polyglossia}  
 \setdefaultlanguage{english}
-\setotherlanguage{arabic}
+\setotherlanguage{arabic} % to use arabic
 \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+% \usepackage{fontspec}
 
-% Fix for footnotes not showing when arabic script used
-% https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
-\makeatletter
-\let\@footnotetext=\beamer@framefootnotetext
-\makeatother
+% % Fix for footnotes not showing when arabic script used
+% % https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
+% \makeatletter
+% \let\@footnotetext=\beamer@framefootnotetext
+% \makeatother
 
-% Fonts -----------------------------------------------------------------------------------
+% % Fix for footnotes not showing when using \footnote<.->
+% \let\oldfootnote\footnote
+% \renewcommand{\footnote}{\only<+->\oldfootnote}
+% % https://stackoverflow.com/questions/62345074/show-footnote-only-after-a-pause-in-beamer-with-r-markdown
+
+% Fonts ------------------------------------------------------------------------
 \usepackage{cmbright}
 \usefonttheme{default}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
-% Bibliography
-% $if(bibliography)$
-% \usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
-% $endif$
-% $for(bibliography)$
-% \addbibresource{$bibliography$}
-% $endfor$
+% Bibliography -----------------------------------------------------------------
+$if(bibliography)$
+\usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
+\renewcommand*{\mkbibacro}[1]{#1}
+$endif$
+$for(bibliography)$
+\addbibresource{$bibliography$}
+$endfor$
 
 % Fix URL, DOI, ISBN, etc. font in biblatex
 % https://tex.stackexchange.com/questions/416093/change-font-of-the-word-url-before-the-actual-url-in-biblatex
@@ -150,7 +192,17 @@ $endif$
 
 }
 
-% Maths -----------------------------------------------
+% ------------------------------------------------------------------------------
+% Mathematics ------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\newcommand*\mybox[1]{%
+\colorbox{navyblue!35}{#1}}
+
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=navyblue,colback=white,arc=2pt,boxrule=1pt}}
+
 \usepackage{amssymb}
 \usepackage{dsfont}  % for indicator variables \mathsds{1}
 \usepackage{bm}  % for better bold script
@@ -288,6 +340,8 @@ $endif$
 \newcommand{\iid}{\,\overset{\text{iid}}{\sim}\,}
 \DeclareMathOperator*{\plim}{plim}
 \DeclareMathOperator{\Lik}{L}
+\DeclareMathOperator{\Leb}{Leb}
+
 
 % Blackboard bold
 \newcommand{\bbR}{\mathbb{R}}
@@ -297,7 +351,8 @@ $endif$
 \newcommand{\bbS}{\mathbb{S}}
 \newcommand{\bbH}{\mathbb{H}}
 \newcommand{\bbP}{\mathbb{P}}
-
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbE}{\mathbb{E}}
 
 % Math calligraphic fonts
 \newcommand{\cA}{{\mathcal A}}
@@ -327,11 +382,9 @@ $endif$
 \newcommand{\cY}{{\mathcal Y}}
 \newcommand{\cZ}{{\mathcal Z}}
 
-
 % Overbrace and underbrace
 \newcommand{\myoverbrace}[3][gray!70]{{\color{#1}\overbrace{\color{black}#2}^{#3}}}
 \newcommand{\myunderbrace}[3][gray!70]{{\color{#1}\underbrace{\color{black}#2}_{#3}}}
-
 
 % Conveniences
 \newcommand{\const}{\text{const.}}
@@ -349,6 +402,22 @@ $endif$
 \DeclareMathOperator{\dd}{d}
 \newcommand{\dint}{\dd\hspace{0.5pt}\!}
 \newcommand{\d}{\text{d}}
+
+% https://tex.stackexchange.com/questions/19981/how-to-write-rudins-symbol-for-absolute-continuity-of-measures
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+  <-6> matha5 <6-7> matha6 <7-8> matha7
+  <8-9> matha8 <9-10> matha9
+  <10-12> matha10 <12-> matha12
+  }{}
+% \DeclareFontShape{U}{matha}{m}{n}{
+%   <5> <6> <7> <8> <9> <10> gen * matha
+%   <10.95> matha10 <12> <14.4> <17.28>
+%   <20.74> <24.88> matha12
+%   }{}
+
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareMathSymbol{\Lt}{3}{matha}{"CE}
 
 \graphicspath{ {figure/} }
 
@@ -375,6 +444,16 @@ $if(csl-refs)$
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 $endif$
 
+\setbeamertemplate{itemize item}[circ]
+\setbeamertemplate{itemize subitem}[circ]
+\setbeamertemplate{itemize subsubitem}[circ]
+
+\newenvironment{onlyhandout}{\only<handout>{}{}}
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
 \begin{document}
 
 $if(title)$
@@ -384,28 +463,36 @@ $if(title)$
 $endif$
 
 $if(toc)$
-\begin{frame}[allowframebreaks=0.8]{$toctitle$}
-	\tableofcontents
+\begin{frame}[plain,noframenumbering]{$toctitle$}
+  $if(tocmulticol)$
+  \begin{multicols}{$tocmulticol$}
+  \tableofcontents
+  \end{multicols}
+  $else$
+  \tableofcontents
+  $endif$
 \end{frame}
 $endif$
-
 $body$
 
 $if(thankyou)$
 \begin{frame}[plain,noframenumbering]{End}
 	\centering
-	\Huge Thank you!
+	\Huge
+  \textcolor{ubdblue}{Thank you!}
 \end{frame}
 $endif$
 
-% $if(bibliography)$
-% \begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
-% 	\printbibliography[heading=none]
-% \end{frame}
-% $endif$
+$if(bibliography)$
+$if(refslide)$
+\begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
+	\printbibliography[heading=none]
+\end{frame}
+$endif$
+$endif$
 
 $for(include-after)$
 $include-after$
 $endfor$
 
-\end{document}
+\end{document}		

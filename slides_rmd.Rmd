@@ -1,7 +1,7 @@
 ---
-title: "UBD Beamer Theme using R Markdown"
-subtitle: "An example presentation document with R code"
-author: "Haziq Jamil"
+title: UBD Beamer Theme using RMarkdown
+subtitle: An example presentation document with R code
+author: Haziq Jamil
 institute: |
   | Mathematical Sciences, Faculty of Science, UBD
   | \url{https://haziqj.ml}
@@ -11,24 +11,34 @@ output:
     latex_engine: xelatex
     slide_level: 3
     keep_tex: true
+    citation_package: biblatex
+    pandoc_args: ["--lua-filter=luafilters/mycustom.lua", "--lua-filter=luafilters/bookdown.lua"] 
+aspectratio: 43
 toc: true
 toctitle: "Overview"
+tocmulticol: 
 banner: true
 logo: true
 progressdots: false
 handout: false
 bibliography: refs.bib
+refslide: true
+thankyou: true
+# header-includes:
+#   - \usepackage{lipsum}
 ---
 
 ```{r setup, include=FALSE}
-# options(tinytex.bib_engine = "biber")
-knitr::opts_chunk$set(echo = FALSE, tidy.opts = list(width.cutoff = 50),
-                      tidy = TRUE)
+knitr::opts_chunk$set(echo = FALSE, fig.height = 4, fig.width = 6, 
+                      cache = TRUE, warning = FALSE, message = FALSE,
+                      fig.path = "figure/", cache.path = "_cache/",
+                      fig.align = "center")
+options(width = 55)  # if 4:3 set to 55, otherwise 70
+library(tidyverse)
+theme_set(theme_classic())
 ```
 
 # Introduction
-
-### Introduction
 
 The UBD Beamer Theme is a modern and minimal theme designed for getting information across in a clean and uncluttered manner.
 	
@@ -57,26 +67,29 @@ This theme is based on the [Saarland Beamer Theme](https://github.com/kailashbuk
 
 ## Blocks
 
-### Blocks
-
 ::: {.block}
 #### Standard Block
-This is a standard block using the \texttt{block} environment.
+This is a standard block using the `block` environment.
 :::
 
-\begin{exampleblock}{Example Block}
-	This is an example block using the \texttt{exampleblock} environment.
-\end{exampleblock}
+::: {.exampleblock latex="{Example Block}"}
+This is an example block using the `exampleblock` environment.
+:::
 
-\begin{alertblock}{Alert Block}
-	This is an alert block using the \texttt{alertblock} environment.
-\end{alertblock}
+::: {.alertblock latex="{Alert Block}"}
+This is an alert block using the `alertblock` environment.
+:::
+
+::: {.altblock latex="{Alternative Block}"}
+This is an alternatively-coloured block using the `altblock` environment.
+:::
+
 
 ## Quotes
 
 ### Quotation
 
-> Archimedes will be remembered when Aeschylus is forgotten, because languages die and mathematical ideas do not. ``Immortality'' may be a silly word, but probably a mathematician has the best chance of whatever it may mean.
+> Archimedes will be remembered when Aeschylus is forgotten, because languages die and mathematical ideas do not. "Immortality" may be a silly word, but probably a mathematician has the best chance of whatever it may mean.
 
 \hfill --- G. H. Hardy in *A Mathematician's Apology, 1941*
 
@@ -85,42 +98,63 @@ This is a standard block using the \texttt{block} environment.
 ### Two columns
 
 We can also add two columns in the slides.
-		\begin{columns}[t]
-			\begin{column}[T]{0.4\textwidth}
-				This is the first column. In this column, we can also add a block for instance.
-				\vspace{1em}
-				\begin{block}{Block}
-					I am a block in a column.
-				\end{block}
-			\end{column}
-			\begin{column}[T]{0.4\textwidth}
-				\begin{itemize}
-					\item In this column,
-					\item we just add the
-					\item bullet points.
-				\end{itemize}
-			\end{column}
-		\end{columns}
+
+\vspace{1em}
+
+::::: {.columns}
+
+:::: {.column width=48%}
+
+This is the first column. 
+In this column, we can also add a block for instance.
+
+::: {.block}
+#### Block
+I am a block in a column.
+:::
+
+
+::::
+
+:::: {.column width=48%}
+
+- In this column,
+- we just add the
+- bullet points.
+
+::::
+
+:::::
 
 ## Colour palette
 
-### Colour palette
+- [Blues: `ubdblue` a.k.a. Dark Cornflower Blue (#325494)]{color=ubdblue}
+- [Teals: `ubdteal` a.k.a. Upsdell Red (#B10F2E)]{color=ubdteal}
+- [Yellows: `ubdyellow` a.k.a. Maize Crayola Red (#F5C946)]{color=ubdyellow}
+- [Alerted text: `ubdred` a.k.a. Upsdell Red (#B10F2E)]{color=ubdred}
+- [Normal text: `ubdblack` a.k.a. Dark Sienna (#230C0F)]{color=ubdblack}
+- [Grays: `gray` a.k.a. Spanish Gray (#999999)]{color=gray}
+<!-- - [Frame background: `ubdblue` (#325494)]{color=ubdblue} -->
+<!-- - [Example block: `ubdteal` a.k.a. Upsdell Red (#B10F2E)]{color=ubdred} -->
 
-- \color{navyblue} Frame titles: \texttt{navyblue}
-- \color{gray} Structure: \texttt{gray}
-- \color{charcoal} Standard block: \texttt{charcoal}
-- \color{solidpink} Alerted block: \texttt{solidpink}
-- \color{queenpink} Alerted block bg: \texttt{queenpink}
-- \color{myrtlegreen} Example block: \texttt{myrtlegreen}
-- \color{lightcyan} Example block: \texttt{lightcyan}
-- \color{orangecrayola} Misc 1: \texttt{orangecrayola}
-- \color{paradisepink} Misc 2: \texttt{paradisepink}
+
+
+
+<!-- - \color{navyblue} Frame titles: \texttt{navyblue} -->
+<!-- - \color{gray} Structure: \texttt{gray} -->
+<!-- - \color{charcoal} Standard block: \texttt{charcoal} -->
+<!-- - \color{solidpink} Alerted block: \texttt{solidpink} -->
+<!-- - \color{queenpink} Alerted block bg: \texttt{queenpink} -->
+<!-- - \color{myrtlegreen} Example block: \texttt{myrtlegreen} -->
+<!-- - \color{lightcyan} Example block: \texttt{lightcyan} -->
+<!-- - \color{orangecrayola} Misc 1: \texttt{orangecrayola} -->
+<!-- - \color{paradisepink} Misc 2: \texttt{paradisepink} -->
 
 ## Mathematics
 
 ### Mathematics
 
-Let $X\sim\mathrm{Pois}(\lambda)$. 
+Let $X\sim\operatorname{Pois}(\lambda)$. 
 The probability mass function of $X$ is given by
 \begin{align}\label{eq:pois}
 	\Pr(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}.
@@ -136,40 +170,39 @@ Using the pmf given in \eqref{eq:pois}, we can derive the moment generating func
 
 ### Theorems et al.
 
-\begin{definition}[Prime numbers]
-	A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
-\end{definition}
+::: {.definition name="Prime numbers"}
+A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
+:::
 
-\begin{theorem}[Infinitude of primes]
-	There are an infinite number of prime numbers.
-\end{theorem}
+::: {.theorem name="Infinitude of primes"}
+There are an infinite number of prime numbers.
+:::
 
-\begin{proof}
-	Suppose that there exist only a finite number of primes, $p_1,\dots,p_n$, say.
-	The number 
-	\[
-	  N = 1+p_1\cdots p_n
-	\]
-	is divisible by some prime $p$.
-	But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
-	This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
-\end{proof}
+::: {.proof}
+Suppose that there exist only a finite number of primes, $p_1,\dots,p_n$, say.
+The number 
+$$
+N = 1+p_1\cdots p_n
+$$
+is divisible by some prime $p$.
+But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
+This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
+
+:::
 
 ### A maths example
 
 Maths examples are continuously numbered (using the \texttt{example} environment).
 	
-\begin{example}[Examples of prime numbers]
-	2, 3, 5, 7 and 11 are examples of prime numbers.
-\end{example}
+::: {.example name="Examples of prime numbers"}
+2, 3, 5, 7 and 11 are examples of prime numbers.
+:::
+	
+::: {.example name="Examples of non-prime numbers"}
+Since $4 = 2 \times 2$, it is not a prime.
+:::
 
-\begin{example}[Examples of non-prime numbers]
-	Since $4 = 2 \times 2$, it is not a prime.
-\end{example}
-
-# Citations
-
-### Citations
+## Citations
 
 The importance of grounding one's self in elementary probability theory and mathematical statistics cannot be overstated.
 Here are some excellent fundamental textbooks every student of statistics should read: @casella2002statistical, @pawitan2001all, and @wasserman2013all.
@@ -183,21 +216,23 @@ Here are some excellent fundamental textbooks every student of statistics should
 <!-- 		Using fancy tools like neural nets, boosting, and support vector machines without understanding basic statistics is like doing brain surgery before knowing how to use a band-aid \citep{wasserman2013all}. -->
 <!-- \end{alertblock} -->
 
-# Using `R`
+## Using `R`
 
 ### Syntax highlighting
 
 ```{r rcode, echo = TRUE, eval = FALSE}
-# function args are keywords c; function names are keywords d
-foo = function(arg1 = 100, arg2 = "character string") {
-  if (TRUE) {
-    x = NULL  # if, function, NULL are keywords a
-    for (i in 1:10) x = c(x, mean(3 * rnorm(100) + 1))
+f <- function(x) {
+  # Check small prime
+  if (x > 10 || x < -10) {
+    stop("Input too big")
+  } else if (x %in% c(2, 3, 5, 7)) {
+    cat("Input is prime!\n")
+  } else if (x %% 2 == 0) {
+    cat("Input is even!\n")
+  } else if (x %% 2 == 1) {
+    cat("Input is odd!\n")
   }
 }
-
-# <-, = and -> are keywords b
-x <- TRUE && FALSE %in% c(T, F)
 ```
 
 ### Slide with R Output
@@ -208,8 +243,9 @@ summary(cars)
 
 ### Slide with Plot
 
-```{r pressure}
-plot(pressure)
+```{r pressure, echo = TRUE, fig.height = 3}
+ggplot(tibble(x = rnorm(100), y = rnorm(100)), aes(x, y)) +
+  geom_point()
 ```
 
 # Conclusion
@@ -217,10 +253,3 @@ plot(pressure)
 ### Conclusion
 
 To use this theme, download the `ubd_beamer_rmd.tex` file, `.sty` files, and image files (for the logo and banner) from \url{https://github.com/haziqj/ubd-beamer}, and place the files together with your `.Rmd` source file. Use the sample `slides_rmd.Rmd` as a guide.
-
-### End
-
-\centering
-\Huge Thank you!
-
-### References

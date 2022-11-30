@@ -1,15 +1,19 @@
-\documentclass[,]{beamer}
+\documentclass[,aspectratio=43]{beamer}
 
-% Load theme ---------------------------------------------------------------------------------
+\usepackage{empheq}
+\usepackage{ragged2e}
 
+% ------------------------------------------------------------------------------
+% Load theme -------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 \usetheme[banner,logo]{ubd}
 
-% Information for the title page -------------------------------------------------------------
+% Information for the title page -----------------------------------------------
 \author{Haziq Jamil}
 
-\title{UBD Beamer Theme using R Markdown}
+\title{UBD Beamer Theme using RMarkdown}
 
-\title{UBD Beamer Theme using R Markdown}
+\title{UBD Beamer Theme using RMarkdown}
 
 \subtitle{An example presentation document with R code}
 
@@ -18,7 +22,7 @@
 
 \date{\today}
 
-% Font fix -----------------------------------------------------------------------------------
+% Font fix ---------------------------------------------------------------------
 % \usepackage{ifxetex,ifluatex}
 % \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
 %   \usepackage[T1]{fontenc}
@@ -30,7 +34,22 @@
 %   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 % \fi
 
-% knitr stuff --------------------------------------------------------------------------------
+\usepackage{soul}
+\makeatletter
+\let\HL\hl
+\renewcommand\hl{%
+  \let\set@color\beamerorig@set@color
+  \let\reset@color\beamerorig@reset@color
+  \HL}
+\makeatother
+% https://tex.stackexchange.com/questions/460731/highlight-color-a-part-of-text-in-block-in-beamer
+\newcommand{\hlc}[2][yellow]{{%
+    \colorlet{foo}{#1}%
+    \sethlcolor{foo}\hl{#2}}%
+}
+% https://tex.stackexchange.com/questions/352956/how-to-highlight-text-with-an-arbitrary-color
+
+% knitr stuff ------------------------------------------------------------------
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -89,35 +108,59 @@
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 
-% Packages -----------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% Packages ---------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+% \setlength{\parskip}{1em}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,fit,arrows.meta}
 \usepackage{xltabular}
-\usepackage{longtable,booktabs}
+\usepackage{longtable,booktabs,multirow,multicol,colortbl}
+
 \usepackage{caption}
 % Make caption package work with longtable
 \makeatletter
 \def\fnum@table{\tablename~\thetable}
 \makeatother
+
 \usepackage{lipsum}
 \usepackage{csquotes}
-\usepackage{polyglossia}  % to use arabic
+
+% To use arabic ----------------------------------------------------------------
+% WARNING: Using arabic script causes some issues with footnotes.
+% Packages are not loaded by default
+\usepackage{polyglossia}  
 \setdefaultlanguage{english}
-\setotherlanguage{arabic}
+\setotherlanguage{arabic} % to use arabic
 \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+% \usepackage{fontspec}
 
-% Fix for footnotes not showing when arabic script used
-% https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
-\makeatletter
-\let\@footnotetext=\beamer@framefootnotetext
-\makeatother
+% % Fix for footnotes not showing when arabic script used
+% % https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
+% \makeatletter
+% \let\@footnotetext=\beamer@framefootnotetext
+% \makeatother
 
-% Fonts -----------------------------------------------------------------------------------
+% % Fix for footnotes not showing when using \footnote<.->
+% \let\oldfootnote\footnote
+% \renewcommand{\footnote}{\only<+->\oldfootnote}
+% % https://stackoverflow.com/questions/62345074/show-footnote-only-after-a-pause-in-beamer-with-r-markdown
+
+% Fonts ------------------------------------------------------------------------
 \usepackage{cmbright}
 \usefonttheme{default}
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
 
-% Bibliography
-% % \usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
-% % % \addbibresource{refs.bib}
-% 
+% Bibliography -----------------------------------------------------------------
+\usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
+\renewcommand*{\mkbibacro}[1]{#1}
+\addbibresource{refs.bib}
+
 % Fix URL, DOI, ISBN, etc. font in biblatex
 % https://tex.stackexchange.com/questions/416093/change-font-of-the-word-url-before-the-actual-url-in-biblatex
 % \renewcommand*{\mkbibacro}[1]{#1}  
@@ -132,66 +175,77 @@
 
 }
 
-% Maths -----------------------------------------------
+% ------------------------------------------------------------------------------
+% Mathematics ------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+
+\newcommand*\mybox[1]{%
+\colorbox{navyblue!35}{#1}}
+
+\usepackage[skins,theorems]{tcolorbox}
+\tcbset{highlight math style={enhanced,
+  colframe=navyblue,colback=white,arc=2pt,boxrule=1pt}}
+
 \usepackage{amssymb}
 \usepackage{dsfont}  % for indicator variables \mathsds{1}
 \usepackage{bm}  % for better bold script
 \usepackage[makeroom]{cancel}
+\usepackage{centernot}
 \renewcommand{\CancelColor}{\color{gray}}
-\newcommand{\bzero}{{\mathbf 0}}
-\newcommand{\bone}{{\mathbf 1}}
-\newcommand{\ba}{{\mathbf a}}
-\newcommand{\bb}{{\mathbf b}}
-\newcommand{\bc}{{\mathbf c}}
-\newcommand{\bd}{{\mathbf d}}
-\newcommand{\be}{{\mathbf e}}
-\newcommand{\bff}{{\mathbf f}}
-\newcommand{\bg}{{\mathbf g}}
-\newcommand{\bh}{{\mathbf h}}
-\newcommand{\bi}{{\mathbf i}}
-\newcommand{\bj}{{\mathbf j}}
-\newcommand{\bk}{{\mathbf k}}
-\newcommand{\bl}{{\mathbf l}}
-\newcommand{\bmm}{{\mathbf m}}
-\newcommand{\bn}{{\mathbf n}}
-\newcommand{\bo}{{\mathbf o}}
-\newcommand{\bp}{{\mathbf p}}
-\newcommand{\bq}{{\mathbf q}}
-\newcommand{\br}{{\mathbf r}}
-\newcommand{\bs}{{\mathbf s}}
-\newcommand{\bt}{{\mathbf t}}
-\newcommand{\bu}{{\mathbf u}}
-\newcommand{\bv}{{\mathbf v}}
-\newcommand{\bw}{{\mathbf w}}
-\newcommand{\bx}{{\mathbf x}}
-\newcommand{\by}{{\mathbf y}}
-\newcommand{\bz}{{\mathbf z}}
-\newcommand{\bA}{{\mathbf A}}
-\newcommand{\bB}{{\mathbf B}}
-\newcommand{\bC}{{\mathbf C}}
-\newcommand{\bD}{{\mathbf D}}
-\newcommand{\bE}{{\mathbf E}}
-\newcommand{\bF}{{\mathbf F}}
-\newcommand{\bG}{{\mathbf G}}
-\newcommand{\bH}{{\mathbf H}}
-\newcommand{\bI}{{\mathbf I}}
-\newcommand{\bJ}{{\mathbf J}}
-\newcommand{\bK}{{\mathbf K}}
-\newcommand{\bL}{{\mathbf L}}
-\newcommand{\bM}{{\mathbf M}}
-\newcommand{\bN}{{\mathbf N}}
-\newcommand{\bO}{{\mathbf O}}
-\newcommand{\bP}{{\mathbf P}}
-\newcommand{\bQ}{{\mathbf Q}}
-\newcommand{\bR}{{\mathbf R}}
-\newcommand{\bS}{{\mathbf S}}
-\newcommand{\bT}{{\mathbf T}}
-\newcommand{\bU}{{\mathbf U}}
-\newcommand{\bV}{{\mathbf V}}
-\newcommand{\bW}{{\mathbf W}}
-\newcommand{\bX}{{\mathbf X}}
-\newcommand{\bY}{{\mathbf Y}}
-\newcommand{\bZ}{{\mathbf Z}}
+\newcommand{\bzero}{{\bm 0}}
+\newcommand{\bone}{{\bm 1}}
+\newcommand{\ba}{{\bm a}}
+\newcommand{\bb}{{\bm b}}
+\newcommand{\bc}{{\bm c}}
+\newcommand{\bd}{{\bm d}}
+\newcommand{\be}{{\bm e}}
+\newcommand{\bff}{{\bm f}}
+\newcommand{\bg}{{\bm g}}
+\newcommand{\bh}{{\bm h}}
+\newcommand{\bi}{{\bm i}}
+\newcommand{\bj}{{\bm j}}
+\newcommand{\bk}{{\bm k}}
+\newcommand{\bl}{{\bm l}}
+\newcommand{\bmm}{{\bm m}}
+\newcommand{\bn}{{\bm n}}
+\newcommand{\bo}{{\bm o}}
+\newcommand{\bp}{{\bm p}}
+\newcommand{\bq}{{\bm q}}
+\newcommand{\br}{{\bm r}}
+\newcommand{\bs}{{\bm s}}
+\newcommand{\bt}{{\bm t}}
+\newcommand{\bu}{{\bm u}}
+\newcommand{\bv}{{\bm v}}
+\newcommand{\bw}{{\bm w}}
+\newcommand{\bx}{{\bm x}}
+\newcommand{\by}{{\bm y}}
+\newcommand{\bz}{{\bm z}}
+\newcommand{\bA}{{\bm A}}
+\newcommand{\bB}{{\bm B}}
+\newcommand{\bC}{{\bm C}}
+\newcommand{\bD}{{\bm D}}
+\newcommand{\bE}{{\bm E}}
+\newcommand{\bF}{{\bm F}}
+\newcommand{\bG}{{\bm G}}
+\newcommand{\bH}{{\bm H}}
+\newcommand{\bI}{{\bm I}}
+\newcommand{\bJ}{{\bm J}}
+\newcommand{\bK}{{\bm K}}
+\newcommand{\bL}{{\bm L}}
+\newcommand{\bM}{{\bm M}}
+\newcommand{\bN}{{\bm N}}
+\newcommand{\bO}{{\bm O}}
+\newcommand{\bP}{{\bm P}}
+\newcommand{\bQ}{{\bm Q}}
+\newcommand{\bR}{{\bm R}}
+\newcommand{\bS}{{\bm S}}
+\newcommand{\bT}{{\bm T}}
+\newcommand{\bU}{{\bm U}}
+\newcommand{\bV}{{\bm V}}
+\newcommand{\bW}{{\bm W}}
+\newcommand{\bX}{{\bm X}}
+\newcommand{\bY}{{\bm Y}}
+\newcommand{\bZ}{{\bm Z}}
 
 % Greek bold letters
 \newcommand{\balpha}{{\bm\alpha}}
@@ -242,6 +296,9 @@
 \DeclareMathOperator{\E}{E}
 \DeclareMathOperator{\Var}{Var}
 \DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\sd}{sd}
+\DeclareMathOperator{\se}{se}
 \DeclareMathOperator{\N}{N}
 \DeclareMathOperator{\Bin}{Bin}
 \DeclareMathOperator{\Bern}{Bern}
@@ -252,6 +309,11 @@
 \DeclareMathOperator{\Mult}{Mult}
 \DeclareMathOperator{\Cat}{Cat}
 \DeclareMathOperator{\Pois}{Poi}
+\DeclareMathOperator{\Geom}{Geom}
+\DeclareMathOperator{\NBin}{NBin}
+\DeclareMathOperator{\Exp}{Exp}
+\DeclareMathOperator{\Betadist}{Beta}
+\DeclareMathOperator{\Hypergeom}{Hypergeom}
 \DeclareMathOperator{\Cauchy}{Cauchy}
 \DeclareMathOperator{\hCauchy}{half-Cauchy}
 \DeclareMathOperator{\LKJ}{LKJ}
@@ -261,6 +323,8 @@
 \newcommand{\iid}{\,\overset{\text{iid}}{\sim}\,}
 \DeclareMathOperator*{\plim}{plim}
 \DeclareMathOperator{\Lik}{L}
+\DeclareMathOperator{\Leb}{Leb}
+
 
 % Blackboard bold
 \newcommand{\bbR}{\mathbb{R}}
@@ -269,6 +333,9 @@
 \newcommand{\bbC}{\mathbb{C}}
 \newcommand{\bbS}{\mathbb{S}}
 \newcommand{\bbH}{\mathbb{H}}
+\newcommand{\bbP}{\mathbb{P}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbE}{\mathbb{E}}
 
 % Math calligraphic fonts
 \newcommand{\cA}{{\mathcal A}}
@@ -298,22 +365,66 @@
 \newcommand{\cY}{{\mathcal Y}}
 \newcommand{\cZ}{{\mathcal Z}}
 
+% Overbrace and underbrace
+\newcommand{\myoverbrace}[3][gray!70]{{\color{#1}\overbrace{\color{black}#2}^{#3}}}
+\newcommand{\myunderbrace}[3][gray!70]{{\color{#1}\underbrace{\color{black}#2}_{#3}}}
+
+% Conveniences
+\newcommand{\const}{\text{const.}}
+\newcommand{\half}[1][1]{\frac{#1}{2}}  % \half for 1/2 or \half[n] for n/2, etc.
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+% Comments grey text
+\newcommand{\mycomment}[2][10pt]{\hspace{#1}\rlap{\color{gray}\text{#2}}}
+
+% Derivatives and integration
+\let\d\relax
+\DeclareMathOperator{\dd}{d}
+\newcommand{\dint}{\dd\hspace{0.5pt}\!}
+\newcommand{\d}{\text{d}}
+
+% https://tex.stackexchange.com/questions/19981/how-to-write-rudins-symbol-for-absolute-continuity-of-measures
+\DeclareFontFamily{U}{matha}{\hyphenchar\font45}
+\DeclareFontShape{U}{matha}{m}{n}{
+  <-6> matha5 <6-7> matha6 <7-8> matha7
+  <8-9> matha8 <9-10> matha9
+  <10-12> matha10 <12-> matha12
+  }{}
+% \DeclareFontShape{U}{matha}{m}{n}{
+%   <5> <6> <7> <8> <9> <10> gen * matha
+%   <10.95> matha10 <12> <14.4> <17.28>
+%   <20.74> <24.88> matha12
+%   }{}
+
+\DeclareSymbolFont{matha}{U}{matha}{m}{n}
+\DeclareMathSymbol{\Lt}{3}{matha}{"CE}
+
+\graphicspath{ {figure/} }
+
+
+\setbeamertemplate{itemize item}[circ]
+\setbeamertemplate{itemize subitem}[circ]
+\setbeamertemplate{itemize subsubitem}[circ]
+
+\newenvironment{onlyhandout}{\only<handout>{}{}}
+
+
 \begin{document}
 
 \begin{frame}[plain,noframenumbering]
 	\titlepage
 \end{frame}
 
-\begin{frame}{Overview}
-	\tableofcontents
-\end{frame}
-
+\begin{frame}[plain,noframenumbering]{Overview}
+    \tableofcontents
+  \end{frame}
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
 \begin{frame}{Introduction}
-\protect\hypertarget{introduction-1}{}
-
 The UBD Beamer Theme is a modern and minimal theme designed for getting
 information across in a clean and uncluttered manner.
 
@@ -321,7 +432,6 @@ This theme is based on the
 \href{https://github.com/kailashbuki/beamerthemesaarland}{Saarland
 Beamer Theme}, with its logos and fonts changed, and colour scheme
 adapted to UBD's pastel-ised colour scheme.
-
 \end{frame}
 
 \hypertarget{features}{%
@@ -332,7 +442,6 @@ adapted to UBD's pastel-ised colour scheme.
 
 \begin{frame}{Slide full of lists}
 \protect\hypertarget{slide-full-of-lists}{}
-
 \emph{Universiti Brunei Darussalam} (UBD; translation University of
 Brunei Darussalam; Jawi: \textarabic{يونيبرسيتي بروني دارالسلام}) is the
 first university in Brunei.
@@ -374,29 +483,32 @@ first university in Brunei.
 \item
   Credits: \url{https://ubd.edu.bn/} and Wikipedia
 \end{itemize}
-
 \end{frame}
 
 \hypertarget{blocks}{%
 \subsection{Blocks}\label{blocks}}
 
-\begin{frame}{Blocks}
-\protect\hypertarget{blocks-1}{}
-
+\begin{frame}[fragile]{Blocks}
 \begin{block}{Standard Block}
-
+\protect\hypertarget{standard-block}{}
 This is a standard block using the \texttt{block} environment.
-
 \end{block}
 
 \begin{exampleblock}{Example Block}
-    This is an example block using the \texttt{exampleblock} environment.
+This is an example block using the \texttt{exampleblock} environment.
+
 \end{exampleblock}
 
 \begin{alertblock}{Alert Block}
-    This is an alert block using the \texttt{alertblock} environment.
+This is an alert block using the \texttt{alertblock} environment.
+
 \end{alertblock}
 
+\begin{altblock}{Alternative Block}
+This is an alternatively-coloured block using the \texttt{altblock}
+environment.
+
+\end{altblock}
 \end{frame}
 
 \hypertarget{quotes}{%
@@ -404,7 +516,6 @@ This is a standard block using the \texttt{block} environment.
 
 \begin{frame}{Quotation}
 \protect\hypertarget{quotation}{}
-
 \begin{quote}
 Archimedes will be remembered when Aeschylus is forgotten, because
 languages die and mathematical ideas do not. ``Immortality'' may be a
@@ -413,7 +524,6 @@ it may mean.
 \end{quote}
 
 \hfill --- G. H. Hardy in \emph{A Mathematician's Apology, 1941}
-
 \end{frame}
 
 \hypertarget{columns}{%
@@ -421,56 +531,59 @@ it may mean.
 
 \begin{frame}{Two columns}
 \protect\hypertarget{two-columns}{}
-
 We can also add two columns in the slides.
 
-\begin{columns}[t]
-            \begin{column}[T]{0.4\textwidth}
-                This is the first column. In this column, we can also add a block for instance.
-                \vspace{1em}
-                \begin{block}{Block}
-                    I am a block in a column.
-                \end{block}
-            \end{column}
-            \begin{column}[T]{0.4\textwidth}
-                \begin{itemize}
-                    \item In this column,
-                    \item we just add the
-                    \item bullet points.
-                \end{itemize}
-            \end{column}
-        \end{columns}
+\vspace{1em}
 
+\begin{columns}[T]
+\begin{column}{0.48\textwidth}
+This is the first column. In this column, we can also add a block for
+instance.
+
+\begin{block}{Block}
+\protect\hypertarget{block}{}
+I am a block in a column.
+\end{block}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+\begin{itemize}
+\tightlist
+\item
+  In this column,
+\item
+  we just add the
+\item
+  bullet points.
+\end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
 
 \hypertarget{colour-palette}{%
 \subsection{Colour palette}\label{colour-palette}}
 
-\begin{frame}{Colour palette}
-\protect\hypertarget{colour-palette-1}{}
-
+\begin{frame}[fragile]{Colour palette}
 \begin{itemize}
 \tightlist
 \item
-  \color{navyblue} Frame titles: \texttt{navyblue}
+  \textcolor{ubdblue}{Blues: \texttt{ubdblue} a.k.a. Dark Cornflower
+  Blue (\#325494)}
 \item
-  \color{gray} Structure: \texttt{gray}
+  \textcolor{ubdteal}{Teals: \texttt{ubdteal} a.k.a. Upsdell Red
+  (\#B10F2E)}
 \item
-  \color{charcoal} Standard block: \texttt{charcoal}
+  \textcolor{ubdyellow}{Yellows: \texttt{ubdyellow} a.k.a. Maize Crayola
+  Red (\#F5C946)}
 \item
-  \color{solidpink} Alerted block: \texttt{solidpink}
+  \textcolor{ubdred}{Alerted text: \texttt{ubdred} a.k.a. Upsdell Red
+  (\#B10F2E)}
 \item
-  \color{queenpink} Alerted block bg: \texttt{queenpink}
+  \textcolor{ubdblack}{Normal text: \texttt{ubdblack} a.k.a. Dark Sienna
+  (\#230C0F)}
 \item
-  \color{myrtlegreen} Example block: \texttt{myrtlegreen}
-\item
-  \color{lightcyan} Example block: \texttt{lightcyan}
-\item
-  \color{orangecrayola} Misc 1: \texttt{orangecrayola}
-\item
-  \color{paradisepink} Misc 2: \texttt{paradisepink}
+  \textcolor{gray}{Grays: \texttt{gray} a.k.a. Spanish Gray (\#999999)}
 \end{itemize}
-
 \end{frame}
 
 \hypertarget{mathematics}{%
@@ -478,9 +591,8 @@ We can also add two columns in the slides.
 
 \begin{frame}{Mathematics}
 \protect\hypertarget{mathematics-1}{}
-
-Let \(X\sim\mathrm{Pois}(\lambda)\). The probability mass function of
-\(X\) is given by \begin{align}\label{eq:pois}
+Let \(X\sim\operatorname{Pois}(\lambda)\). The probability mass function
+of \(X\) is given by \begin{align}\label{eq:pois}
     \Pr(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}.
 \end{align} Using the pmf given in \eqref{eq:pois}, we can derive the
 moment generating function for \(X\) to be: \begin{align*}
@@ -490,95 +602,85 @@ moment generating function for \(X\) to be: \begin{align*}
     &= e^{-\lambda}  e^{\lambda e^t} \\
     &= \exp\{\lambda(e^t - 1) \}.
 \end{align*}
-
 \end{frame}
 
 \begin{frame}{Theorems et al.}
 \protect\hypertarget{theorems-et-al.}{}
-
 \begin{definition}[Prime numbers]
-    A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
+A prime number is a natural number greater than 1 that is not a product
+of two smaller natural numbers.
 \end{definition}
 
 \begin{theorem}[Infinitude of primes]
-    There are an infinite number of prime numbers.
+There are an infinite number of prime numbers.
 \end{theorem}
 
 \begin{proof}
-    Suppose that there exist only a finite number of primes, $p_1,\dots,p_n$, say.
-    The number 
-    \[
-      N = 1+p_1\cdots p_n
-    \]
-    is divisible by some prime $p$.
-    But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
-    This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
+Suppose that there exist only a finite number of primes,
+\(p_1,\dots,p_n\), say. The number \[
+N = 1+p_1\cdots p_n
+\] is divisible by some prime \(p\). But \(p\) cannot be any of
+\(p_1,\dots,p_n\), since the latter all leave remainder 1 on dividing
+\(N\). This contradicts our assumption that \(p_1,\dots,p_n\) is the
+complete list of primes.
 \end{proof}
-
 \end{frame}
 
 \begin{frame}{A maths example}
 \protect\hypertarget{a-maths-example}{}
-
 Maths examples are continuously numbered (using the \texttt{example}
 environment).
 
 \begin{example}[Examples of prime numbers]
-    2, 3, 5, 7 and 11 are examples of prime numbers.
+2, 3, 5, 7 and 11 are examples of prime numbers.
 \end{example}
 
 \begin{example}[Examples of non-prime numbers]
-    Since $4 = 2 \times 2$, it is not a prime.
+Since \(4 = 2 \times 2\), it is not a prime.
 \end{example}
-
 \end{frame}
 
 \hypertarget{citations}{%
-\section{Citations}\label{citations}}
+\subsection{Citations}\label{citations}}
 
 \begin{frame}{Citations}
-\protect\hypertarget{citations-1}{}
-
 The importance of grounding one's self in elementary probability theory
 and mathematical statistics cannot be overstated. Here are some
 excellent fundamental textbooks every student of statistics should read:
-Casella and Berger (2002), Pawitan (2001), and Wasserman (2004).
+\textcite{casella2002statistical}, \textcite{pawitan2001all}, and
+\textcite{wasserman2013all}.
 
 \blfootnote{It is highly suggested to use pandoc's way of generating bibliographies (see \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{here}) rather than using Biblatex. This footnote was created using the custom \texttt{\textbackslash blfootnote\{\}} command.}
-
 \end{frame}
 
 \hypertarget{using-r}{%
-\section{\texorpdfstring{Using \texttt{R}}{Using R}}\label{using-r}}
+\subsection{\texorpdfstring{Using \texttt{R}}{Using R}}\label{using-r}}
 
 \begin{frame}[fragile]{Syntax highlighting}
 \protect\hypertarget{syntax-highlighting}{}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# function args are keywords c; function names are}
-\CommentTok{# keywords d}
-\NormalTok{foo =}\StringTok{ }\ControlFlowTok{function}\NormalTok{(}\DataTypeTok{arg1 =} \DecValTok{100}\NormalTok{, }\DataTypeTok{arg2 =} \StringTok{"character string"}\NormalTok{) \{}
-    \ControlFlowTok{if}\NormalTok{ (}\OtherTok{TRUE}\NormalTok{) \{}
-\NormalTok{        x =}\StringTok{ }\OtherTok{NULL}  \CommentTok{# if, function, NULL are keywords a}
-        \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{) x =}\StringTok{ }\KeywordTok{c}\NormalTok{(x, }\KeywordTok{mean}\NormalTok{(}\DecValTok{3} \OperatorTok{*}\StringTok{ }\KeywordTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{) }\OperatorTok{+}\StringTok{ }
-\StringTok{            }\DecValTok{1}\NormalTok{))}
-\NormalTok{    \}}
+\NormalTok{f }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
+  \CommentTok{\# Check small prime}
+  \ControlFlowTok{if}\NormalTok{ (x }\SpecialCharTok{\textgreater{}} \DecValTok{10} \SpecialCharTok{||}\NormalTok{ x }\SpecialCharTok{\textless{}} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{) \{}
+    \FunctionTok{stop}\NormalTok{(}\StringTok{"Input too big"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{7}\NormalTok{)) \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Input is prime!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x }\SpecialCharTok{\%\%} \DecValTok{2} \SpecialCharTok{==} \DecValTok{0}\NormalTok{) \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Input is even!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (x }\SpecialCharTok{\%\%} \DecValTok{2} \SpecialCharTok{==} \DecValTok{1}\NormalTok{) \{}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Input is odd!}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
 \NormalTok{\}}
-
-\CommentTok{# <-, = and -> are keywords b}
-\NormalTok{x <-}\StringTok{ }\OtherTok{TRUE} \OperatorTok{&&}\StringTok{ }\OtherTok{FALSE} \OperatorTok{%in%}\StringTok{ }\KeywordTok{c}\NormalTok{(T, F)}
 \end{Highlighting}
 \end{Shaded}
-
 \end{frame}
 
 \begin{frame}[fragile]{Slide with R Output}
 \protect\hypertarget{slide-with-r-output}{}
-
 \begin{Shaded}
 \begin{Highlighting}[]
-\KeywordTok{summary}\NormalTok{(cars)}
+\FunctionTok{summary}\NormalTok{(cars)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -591,14 +693,18 @@ Casella and Berger (2002), Pawitan (2001), and Wasserman (2004).
 ##  3rd Qu.:19.0   3rd Qu.: 56.00  
 ##  Max.   :25.0   Max.   :120.00
 \end{verbatim}
-
 \end{frame}
 
-\begin{frame}{Slide with Plot}
+\begin{frame}[fragile]{Slide with Plot}
 \protect\hypertarget{slide-with-plot}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }\AttributeTok{y =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)), }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
 
-\includegraphics{slides_rmd_files/figure-beamer/pressure-1.pdf}
-
+\begin{center}\includegraphics{figure/pressure-1} \end{center}
 \end{frame}
 
 \hypertarget{conclusion}{%
@@ -606,47 +712,22 @@ Casella and Berger (2002), Pawitan (2001), and Wasserman (2004).
 
 \begin{frame}[fragile]{Conclusion}
 \protect\hypertarget{conclusion-1}{}
-
 To use this theme, download the \texttt{ubd\_beamer\_rmd.tex} file,
 \texttt{.sty} files, and image files (for the logo and banner) from
 \url{https://github.com/haziqj/ubd-beamer}, and place the files together
 with your \texttt{.Rmd} source file. Use the sample
 \texttt{slides\_rmd.Rmd} as a guide.
-
 \end{frame}
 
-\begin{frame}{End}
-\protect\hypertarget{end}{}
-
-\centering
-
-\Huge Thank you!
-
+\begin{frame}[plain,noframenumbering]{End}
+	\centering
+	\Huge
+  \textcolor{ubdblue}{Thank you!}
 \end{frame}
 
-\begin{frame}{References}
-\protect\hypertarget{references}{}
-
-\hypertarget{refs}{}
-\leavevmode\hypertarget{ref-casella2002statistical}{}%
-Casella, George, and Roger L. Berger. 2002. \emph{Statistical
-Inference}. 2nd ed. Pacific Grove, CA: Duxbury.
-
-\leavevmode\hypertarget{ref-pawitan2001all}{}%
-Pawitan, Yudi. 2001. \emph{In All Likelihood. Statistical Modelling and
-Inference Using Likelihood}. Oxford University Press.
-
-\leavevmode\hypertarget{ref-wasserman2013all}{}%
-Wasserman, Larry. 2004. \emph{All of Statistics: A Concise Course in
-Statistical Inference}. New York: Springer-Verlag.
-\url{https://doi.org/10.1007/978-0-387-21736-9}.
-
+\begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
+	\printbibliography[heading=none]
 \end{frame}
 
 
-% % \begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
-% 	\printbibliography[heading=none]
-% \end{frame}
-% 
-
-\end{document}
+\end{document}		

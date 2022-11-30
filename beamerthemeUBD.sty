@@ -1,5 +1,4 @@
-
-\ProvidesPackage{beamerthemeubd}[2020/12/09]
+\ProvidesPackage{beamerthemeubd}[2022/11/30]
 
 \mode<presentation>
 
@@ -7,6 +6,8 @@
 \usepackage{tikz}
 \usepackage{changepage}
 \usepackage{kvoptions}
+\usepackage{etoolbox}
+\usepackage{graphicx}
 
 % Process options
 \DeclareBoolOption{banner}
@@ -23,9 +24,21 @@
 % 	\translidesfalse
 % \fi
 
-% COLOUR THEME -----------------------------------------------------------
+% ------------------------------------------------------------------------------
+% COLOUR THEME -----------------------------------------------------------------
+% ------------------------------------------------------------------------------
 
-\definecolor{navyblue}{RGB}{0, 47, 92}
+\definecolor{ubdblue}{HTML}{325494}
+\definecolor{ubdteal}{HTML}{58DDB3}
+\definecolor{ubdyellow}{HTML}{F5C946}
+\definecolor{ubdblack}{HTML}{230C0F}
+\definecolor{ubdred}{HTML}{B10F2E} % B10F2E
+
+\definecolor{blockblue}{HTML}{243D6A}
+\definecolor{examplegreen}{HTML}{1C8765}
+
+
+\definecolor{navyblue}{RGB}{0, 47, 92}  % #002f5c 
 \definecolor{charcoal}{RGB}{54,69,79}
 \definecolor{gray}{RGB}{128, 128, 128}
 \definecolor{solidpink}{HTML}{8E3B46}
@@ -34,42 +47,51 @@
 \definecolor{paradisepink}{HTML}{EF476F}
 \definecolor{myrtlegreen}{HTML}{346B61}
 \definecolor{lightcyan}{HTML}{CCE8E3}
+\definecolor{flame}{HTML}{fe5d26}
 
 % Main colours
-\setbeamercolor{structure}{fg=gray,bg=white}
-\setbeamercolor{frametitle}{fg=navyblue}
-\setbeamercolor{framesubtitle}{fg=navyblue}
+\setbeamercolor{structure}{fg=ubdblue,bg=white}
+\setbeamercolor{frametitle}{fg=ubdblue}
+\setbeamercolor{framesubtitle}{fg=ubdblue}
+\setbeamercolor{normal text}{fg=ubdblack}
 \setbeamercolor{alerted text}{fg=solidpink}
 
 % Block colours
-\setbeamercolor{block title}{fg=gray!30!white,bg=charcoal}
-\setbeamercolor{block body}{parent=normal text,bg=gray!20,fg=charcoal}
+\setbeamercolor{block title}{fg=white,bg=ubdblue!100!ubdblack}
+\setbeamercolor{block body}{parent=normal text,bg=ubdblue!10,,fg=ubdblue!30!ubdblack}
 
-\setbeamercolor{block title example}{fg=lightcyan,bg=myrtlegreen}
-\setbeamercolor{block body example}{parent=normal text,bg=lightcyan,fg=myrtlegreen}
+\setbeamercolor{block title example}{fg=ubdteal!30!ubdblack,bg=ubdteal!90}
+\setbeamercolor{block body example}{parent=normal text,bg=ubdteal!10,fg=ubdteal!50!ubdblack}
 
-\setbeamercolor{block title alerted}{fg=queenpink,bg=solidpink}
-\setbeamercolor{block body alerted}{parent=normal text,bg=queenpink, fg=solidpink}
+\setbeamercolor{block title alerted}{fg=white,bg=ubdred}
+\setbeamercolor{block body alerted}{parent=normal text,bg=ubdred!10,fg=ubdred}
 
-\setbeamercolor{title}{fg=navyblue}
-\setbeamercolor{subtitle}{fg=navyblue}
+\setbeamercolor{title}{fg=ubdblue}
+\setbeamercolor{subtitle}{fg=ubdblue}
 
-\setbeamercolor{bibliography entry author}{fg=charcoal}
-\setbeamercolor{bibliography entry title}{fg=charcoal}
+\setbeamercolor{bibliography entry author}{fg=ubdblack}
+\setbeamercolor{bibliography entry title}{fg=ubdblack}
 \setbeamercolor{bibliography entry location}{fg=gray}
 \setbeamercolor{bibliography entry note}{fg=gray}
 
-% INNER THEME -----------------------------------------------------------
+% ------------------------------------------------------------------------------
+% INNER THEME ------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 
 \defbeamertemplate{itemize item}{circ}%
-{\small\raise.2ex\hbox{\color{navyblue}$\bullet$}}
+{\small\raise.2ex\hbox{$\bullet$}}
 \defbeamertemplate{itemize subitem}{circ}%
-{\small\raise.1ex\hbox{\color{navyblue}$\circ$}}
+{\small\raise.1ex\hbox{$\circ$}}
 \defbeamertemplate{itemize subsubitem}{circ}%
-{\scriptsize\raise.1ex\hbox{\color{navyblue}$\bullet$}}
+{\scriptsize\raise.1ex\hbox{$\bullet$}}
 \setbeamertemplate{items}[circ]
+\setbeamertemplate{itemize item}[circ]
+\setbeamertemplate{itemize subitem}[circ]
+\setbeamertemplate{itemize subsubitem}[circ]
 
-% OUTER THEME -----------------------------------------------------------
+% ------------------------------------------------------------------------------
+% OUTER THEME ------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 
 \setbeamertemplate{navigation symbols}{} 	% turn off pdf navigation symbols
 
@@ -90,41 +112,62 @@
 \setbeamersize{text margin right=0.33cm}
 
 % Customisation for the title page
-\setbeamertemplate{title page}
-{%
-	\leavevmode%
-	\begin{adjustwidth}{0.6cm}{0cm}  % adjusts the margins
-		
-		\ifbeamerthemeubd@banner%
-			\vspace*{-5ex}
-			\mbox{}\hfill\includegraphics[height=2cm]{ubd_banner.png}\par
-			\par\vfill	
-		\else%
-		\fi%
+\titlegraphic{\includegraphics[width=1.75cm]{ubd_brand.pdf}}
+\setbeamertemplate{title page}{%
+\begin{tikzpicture}[remember picture,overlay]
 
-		\usebeamerfont{title}{\usebeamercolor[fg]{title}\inserttitle}\par
-		\usebeamerfont{subtitle}{\usebeamercolor[fg]{subtitle}\insertsubtitle}\par
-		\bigskip
-		\usebeamerfont{author}\insertauthor\par
-		\usebeamerfont{institute}\insertinstitute\par
-		\medskip
-		\usebeamerfont{date}\insertdate
-	\end{adjustwidth}
+\fill[ubdblue]
+  ([xshift=21pt]current page.north west) rectangle ([xshift=42pt,yshift=0.732\paperheight]current page.south west);
+\fill[ubdteal]
+  ([xshift=45pt]current page.north west) rectangle ([xshift=59.7pt,yshift=0.732\paperheight]current page.south west);
+\fill[ubdyellow]
+  ([xshift=62.7pt]current page.north west) rectangle ([xshift=70.4pt,yshift=0.732\paperheight]current page.south west);
+
+\node[anchor=south west] 
+  at ([xshift=17pt,yshift=0.649\paperheight]current page.south west) (logo)
+  {\parbox{\paperwidth}{  
+  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+  }};
+
+\fill[ubdblue]
+  ([xshift=21pt,yshift=0.64\paperheight]current page.south west) rectangle ([xshift=42pt]current page.south west);
+\fill[ubdteal]
+  ([xshift=45pt,yshift=0.64\paperheight]current page.south west) rectangle ([xshift=59.7pt]current page.south west);
+\fill[ubdyellow]
+  ([xshift=62.7pt,yshift=0.64\paperheight]current page.south west) rectangle ([xshift=70.4pt]current page.south west);
+
+\node[anchor=west]
+  at ([yshift=0\paperheight,xshift=70.4pt+15pt]current page.west) (title)
+  {\parbox[t]{0.845\textwidth}{\raggedright%
+    \usebeamerfont{title}{\usebeamercolor[fg]{title}\inserttitle}\par
+    \usebeamerfont{subtitle}{\usebeamercolor[fg]{subtitle}\insertsubtitle}\par
+    \bigskip
+    \usebeamerfont{author}\insertauthor\par
+    \usebeamerfont{institute}\insertinstitute\par
+    \medskip
+    \usebeamerfont{date}\insertdate
+  }};
+
+\end{tikzpicture}
 }
 
 % Customisation for the footers
-\setbeamertemplate{footline}
-{%
-	\leavevmode%
-	\hbox{%
-		\begin{beamercolorbox}[wd=0.98\paperwidth,ht=4.25ex,dp=2ex,left]{pagenumber}%
-			\hspace*{1ex} \insertframenumber{} / \inserttotalframenumber
-		\end{beamercolorbox}
-		\ifbeamerthemeubd@logo%
-			\llap{\includegraphics[height=0.3cm]{ubd.jpg}}
-		\else%
-		\fi%
-	}%
+\setbeamertemplate{footline}{%
+\vspace{0.04\paperheight}
+\begin{tikzpicture}[remember picture,overlay]
+
+\fill[ubdblue]
+  ([xshift=21pt,yshift=0.04\paperheight]current page.south west) rectangle ([xshift=42pt]current page.south west);
+\fill[ubdteal]
+  ([xshift=45pt,yshift=0.04\paperheight]current page.south west) rectangle ([xshift=59.7pt]current page.south west);
+\fill[ubdyellow]
+  ([xshift=62.7pt,yshift=0.04\paperheight]current page.south west) rectangle ([xshift=70.4pt]current page.south west);
+
+\node[anchor=south] at ([yshift=0.4pt,xshift=32pt]current page.south west) (pagenumber) {\color{white}\scalebox{0.8}{\insertframenumber{} / \inserttotalframenumber}};
+
+\node[anchor=south east] at ([]current page.south east) (logo) {\includegraphics[height=0.032\paperheight]{ubd_brand.pdf}};
+
+\end{tikzpicture}
 }
 
 % Progress dots (based on smoothbars)
@@ -192,7 +235,7 @@
 \fi
 
 % Bibliography
-\setbeamertemplate{bibliography item}{\makebox[0.47cm]{$\circ$}}
+\setbeamertemplate{bibliography item}{\makebox[0.47cm]{$\bullet$}}
 
 % Mathematics
 \setbeamertemplate{theorems}[numbered]
@@ -201,10 +244,15 @@
 \newenvironment{example*}
   {\addtocounter{theorem}{-1}\example}
   {\endexample}  % https://tex.stackexchange.com/questions/122880/continuing-example-counters-in-beamer
-\newtheorem{prop}{Proposition}
+\newenvironment{examplecont}
+  {\addtocounter{theorem}{-1}\example}
+  {\endexample}  % https://tex.stackexchange.com/questions/122880/continuing-example-counters-in-beamer
+\newtheorem{proposition}[theorem]{Proposition}
 \renewcommand{\qedsymbol}{$\blacksquare$}
 
-% FONT THEME -----------------------------------------------------------
+% ------------------------------------------------------------------------------
+% FONT THEME -------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 
 % Maths fonts
 \usepackage{cmbright}
@@ -271,8 +319,6 @@
 	\addtocounter{framenumber}{\value{framenumbervorappendix}} 
 }
 
-
-
 % Custom footnote command
 % https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
 \makeatletter
@@ -281,6 +327,10 @@
 
 \mode<all>
 
-
-
-
+% Create a new altblock environment
+\newenvironment{altblock}[1]{%
+\setbeamercolor{block title}{fg=ubdyellow!30!ubdblack,bg=ubdyellow!90!ubdblack}%
+\setbeamercolor{block body}{parent=normal text,bg=ubdyellow!10,fg=ubdyellow!50!ubdblack}
+\setbeamercolor{itemize item}{fg=ubdyellow!90!ubdblack}%
+\setbeamercolor{itemize subitem}{fg=ubdyellow!90!ubdblack}%
+\begin{block}{#1}}{\end{block}}
