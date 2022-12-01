@@ -4,21 +4,31 @@ This is the unofficial beamer theme designed for [Universiti Brunei Darussalam](
 View the [PDF slides](https://github.com/haziqj/ubd-beamer/blob/main/slides.pdf).
 
 <div style="float:left">
-  <img src="images/slides-1.tiff" width="45%" border=0>
-  <img src="images/slides-2.tiff" width="45%" border=0>
-  <img src="images/slides-3.tiff" width="45%" border=0>
-  <img src="images/slides-4.tiff" width="45%" border=0>
+  <img src="images/slides-1.png" width="45%" border=0>
+  <img src="images/slides-2.png" width="45%" border=0>
+  <img src="images/slides-3.png" width="45%" border=0>
+  <img src="images/slides-4.png" width="45%" border=0>
 </div>
 
 ## Usage
 
-To use this theme, download the `.sty` files and image files (for the logo and banner) from https://github.com/haziqj/ubd-beamer, and place the files together with your TeX source files. 
-Use the sample `slides.tex` file as a guide.
-Compiling may require XeLaTeX.
+To use this theme, copy the 
 
-## Options
+1. `beamerthemeUBD.sty`; and
+2. `ubd_brand.pdf` 
+
+and place these together in your working directory.
+Use the sample `minimal_example.tex` file as a guide.
+
+Additionally, if using Rmd (in RStudio for example), then add also
+
+3. `ubd_beamer_rmd.tex`; and
+4. `luafilters/` folder
+
+to your working directory.
+Edit the `slides_rmd.Rmd` to your liking.
+
+## Beamer options
 
 - `progressdots` provides progress dots by sections at the top of each slide.
 - `transitions` provides transition slides between sections.
-- `banner`  provides the UBD banner (ubd_banner.png) on the title slide.
-- `logo` provides the UBD logo (ubd.jpg) in the footers.
