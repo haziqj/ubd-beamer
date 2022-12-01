@@ -2,27 +2,30 @@
 
 \mode<presentation>
 
-% Load packages
+% ------------------------------------------------------------------------------
+% Load packages ----------------------------------------------------------------
+% ------------------------------------------------------------------------------
 \usepackage{tikz}
 \usepackage{changepage}
-\usepackage{kvoptions}
 \usepackage{etoolbox}
 \usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{kvoptions}
 
 % Process options
-\DeclareBoolOption{banner}
-\DeclareBoolOption{logo}
+\DeclareBoolOption{banner}  % deprecated
+\DeclareBoolOption{logo}  % deprecated
 \DeclareBoolOption{progressdots}
 \DeclareBoolOption{transitions}
 \ProcessKeyvalOptions*
 
 \newif\iftranslides
 \translidestrue
-% \ifbeamerthemeubd@transitions%
-% 	\translidestrue
-% \else
-% 	\translidesfalse
-% \fi
+\ifbeamerthemeubd@transitions
+	\translidestrue
+\else
+	\translidesfalse
+\fi
 
 % ------------------------------------------------------------------------------
 % COLOUR THEME -----------------------------------------------------------------
@@ -32,15 +35,12 @@
 \definecolor{ubdteal}{HTML}{58DDB3}
 \definecolor{ubdyellow}{HTML}{F5C946}
 \definecolor{ubdblack}{HTML}{230C0F}
-\definecolor{ubdred}{HTML}{B10F2E} % B10F2E
+\definecolor{ubdred}{HTML}{B10F2E}
+\definecolor{gray}{HTML}{999999}
 
-\definecolor{blockblue}{HTML}{243D6A}
-\definecolor{examplegreen}{HTML}{1C8765}
-
-
+% old colours
 \definecolor{navyblue}{RGB}{0, 47, 92}  % #002f5c 
 \definecolor{charcoal}{RGB}{54,69,79}
-\definecolor{gray}{RGB}{128, 128, 128}
 \definecolor{solidpink}{HTML}{8E3B46}
 \definecolor{queenpink}{HTML}{EAD1D6}
 \definecolor{orangecrayola}{HTML}{FFD166}
@@ -54,7 +54,7 @@
 \setbeamercolor{frametitle}{fg=ubdblue}
 \setbeamercolor{framesubtitle}{fg=ubdblue}
 \setbeamercolor{normal text}{fg=ubdblack}
-\setbeamercolor{alerted text}{fg=solidpink}
+\setbeamercolor{alerted text}{fg=ubdred}
 
 % Block colours
 \setbeamercolor{block title}{fg=white,bg=ubdblue!100!ubdblack}
@@ -62,6 +62,10 @@
 
 \setbeamercolor{block title example}{fg=ubdteal!30!ubdblack,bg=ubdteal!90}
 \setbeamercolor{block body example}{parent=normal text,bg=ubdteal!10,fg=ubdteal!50!ubdblack}
+\AtBeginEnvironment{example}{
+	\setbeamercolor{itemize item}{fg=ubdteal!50!ubdblack}
+  \setbeamercolor{itemize subitem}{fg=ubdteal!50!ubdblack}
+}
 
 \setbeamercolor{block title alerted}{fg=white,bg=ubdred}
 \setbeamercolor{block body alerted}{parent=normal text,bg=ubdred!10,fg=ubdred}
@@ -73,6 +77,8 @@
 \setbeamercolor{bibliography entry title}{fg=ubdblack}
 \setbeamercolor{bibliography entry location}{fg=gray}
 \setbeamercolor{bibliography entry note}{fg=gray}
+
+\setbeamercolor{mini frame}{fg=ubdblue}
 
 % ------------------------------------------------------------------------------
 % INNER THEME ------------------------------------------------------------------
@@ -183,18 +189,18 @@
 
 			\pgfdeclareverticalshading{beamer@barshade}{\the\paperwidth}{%
 				color(0ex)=(global.bg);%
-				color(1ex)=(section in head/foot.bg);%
+				color(0ex)=(section in head/foot.bg);%
 				color(7ex)=(section in head/foot.bg)%
 			}
 			\pgfdeclareverticalshading{beamer@aboveframetitle}{\the\paperwidth}{%
 				color(0ex)=(frametitle.bg);%
-				color(1ex)=(frametitle.bg);%
-				color(2ex)=(section in head/foot.bg)
+				color(0ex)=(frametitle.bg);%  previously 1ex
+				color(0ex)=(section in head/foot.bg)% previosly 2ex
 			}
-		  	\pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
-		    	color(0ex)=(global.bg);%
-		    	color(1ex)=(frametitle.bg)
-		  	}
+	  	\pgfdeclareverticalshading{beamer@belowframetitle}{\the\paperwidth}{%
+	    	color(0ex)=(global.bg);%
+	    	color(1ex)=(frametitle.bg)
+	  	}
 		}
 	}
 
@@ -202,8 +208,8 @@
 	\defbeamertemplate*{headline}{smoothbars theme}
 	{%
 		\pgfuseshading{beamer@barshade}%
-		\vskip-7ex%
-		\begin{beamercolorbox}[ignorebg,ht=2.25ex,dp=3.75ex]{section in head/foot}
+		\vskip-5ex%
+		\begin{beamercolorbox}[ignorebg,ht=0.25ex,dp=3.75ex]{section in head/foot}
 			\insertnavigation{\paperwidth}
 		\end{beamercolorbox}%
 	}%
@@ -212,10 +218,9 @@
 	{%
 		\nointerlineskip%
 		\usebeamerfont{headline}%
-		\begin{beamercolorbox}[wd=\paperwidth,ht=1.5ex,dp=0ex,vmode]{empty}
+		\begin{beamercolorbox}[wd=\paperwidth,ht=0.5ex,dp=0ex,vmode]{empty}
 			\pgfuseshading{beamer@aboveframetitle}%
 		\end{beamercolorbox}%
-		\vskip-.5ex%
 		\nointerlineskip%
 		\begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,rightskip=.3cm plus1fil,vmode]{frametitle}
 			\usebeamerfont*{frametitle}\insertframetitle%
@@ -254,12 +259,25 @@
 % FONT THEME -------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
-% Maths fonts
+% Load these for the maths fonts
 \usepackage{cmbright}
 \usefonttheme{professionalfonts}
 
-% Use default font themes
-\usefonttheme{default}
+% \usepackage{roboto}  % alternative
+% \usepackage{eulervm}  % math font
+
+% font fix (not needed really)
+% \usepackage{ifxetex,ifluatex}
+% \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+%   \usepackage[T1]{fontenc}
+%   \usepackage[utf8]{inputenc}
+%   \usepackage{textcomp} % provide euro and other symbols
+% \else % if luatex or xetex
+%   \usepackage{unicode-math}
+%   \defaultfontfeatures{Scale=MatchLowercase}
+%   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+% \fi
+
 
 \setbeamerfont{title}{series=\bfseries, size=\LARGE}  %family=\rmfamily, 
 \setbeamerfont{subtitle}{series=\mdseries, size=\large}
@@ -301,13 +319,13 @@
 	}
 \fi
 
-\newcommand{\transitionsubsec}{
-	\miniframesoff
-	\begin{frame}[plain]
-    	\tableofcontents[currentsection]
-	\end{frame}
-	\miniframeson
-}
+% \newcommand{\transitionsubsec}{
+% 	\miniframesoff
+% 	\begin{frame}[plain]
+%     	\tableofcontents[currentsection]
+% 	\end{frame}
+% 	\miniframeson
+% }
 
 % Backup slides counter
 \newcommand{\backupbegin}{
@@ -329,8 +347,12 @@
 
 % Create a new altblock environment
 \newenvironment{altblock}[1]{%
-\setbeamercolor{block title}{fg=ubdyellow!30!ubdblack,bg=ubdyellow!90!ubdblack}%
+\setbeamercolor{block title}{fg=ubdyellow!30!ubdblack,bg=ubdyellow!90!ubdblack}
 \setbeamercolor{block body}{parent=normal text,bg=ubdyellow!10,fg=ubdyellow!50!ubdblack}
-\setbeamercolor{itemize item}{fg=ubdyellow!90!ubdblack}%
-\setbeamercolor{itemize subitem}{fg=ubdyellow!90!ubdblack}%
+\setbeamercolor{itemize item}{fg=ubdyellow!90!ubdblack}
+\setbeamercolor{itemize subitem}{fg=ubdyellow!90!ubdblack}
 \begin{block}{#1}}{\end{block}}
+
+% Create a new onlyhandout environment
+\newenvironment{onlyhandout}{\only<handout>{}{}}
+
