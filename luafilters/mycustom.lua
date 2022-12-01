@@ -31,6 +31,18 @@ Span = function (el)
       pandoc.RawInline('latex', '}')
     )
   end
+
+  -- highlight stuff that ends in {.correction}
+  if el.classes[1] == "blfootnote" then
+    table.insert(
+      el.content, 1, 
+      pandoc.RawInline('latex', '\\blfootnote{')
+    )
+    table.insert(
+      el.content, 
+      pandoc.RawInline('latex', '}')
+    )
+  end
   
   -- highlight stuff with {highlight = "some-color"}
   if not isempty(highlight) then

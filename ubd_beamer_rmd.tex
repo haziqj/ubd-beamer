@@ -1,12 +1,9 @@
 \documentclass[$if(handout)$handout,$endif$,$if(aspectratio)$aspectratio=$aspectratio$$endif$]{beamer}
 
-\usepackage{empheq}
-\usepackage{ragged2e}
-
 % ------------------------------------------------------------------------------
 % Load theme -------------------------------------------------------------------
 % ------------------------------------------------------------------------------
-\usetheme[$if(progressdots)$progressdots,$endif$$if(transitions)$transitions,$endif$$if(banner)$banner,$endif$$if(logo)$logo$endif$]{ubd}
+\usetheme[$if(progressdots)$progressdots,$endif$$if(transitions)$transitions$endif$]{ubd}
 
 % Information for the title page -----------------------------------------------
 $if(author)$
@@ -35,34 +32,9 @@ $else$
 \date{\today}
 $endif$
 
-% Font fix ---------------------------------------------------------------------
-% \usepackage{ifxetex,ifluatex}
-% \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-%   \usepackage[T1]{fontenc}
-%   \usepackage[utf8]{inputenc}
-%   \usepackage{textcomp} % provide euro and other symbols
-% \else % if luatex or xetex
-%   \usepackage{unicode-math}
-%   \defaultfontfeatures{Scale=MatchLowercase}
-%   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-% \fi
-
-\usepackage{soul}
-\makeatletter
-\let\HL\hl
-\renewcommand\hl{%
-  \let\set@color\beamerorig@set@color
-  \let\reset@color\beamerorig@reset@color
-  \HL}
-\makeatother
-% https://tex.stackexchange.com/questions/460731/highlight-color-a-part-of-text-in-block-in-beamer
-\newcommand{\hlc}[2][yellow]{{%
-    \colorlet{foo}{#1}%
-    \sethlcolor{foo}\hl{#2}}%
-}
-% https://tex.stackexchange.com/questions/352956/how-to-highlight-text-with-an-arbitrary-color
-
+% ------------------------------------------------------------------------------
 % knitr stuff ------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -70,7 +42,7 @@ $endif$
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
 % Add ',fontsize=\small' for more characters per line
 \usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
+\definecolor{shadecolor}{HTML}{F5F5F5}
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
@@ -125,20 +97,32 @@ $endif$
 % Packages ---------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
-% \setlength{\parskip}{1em}
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric,fit,arrows.meta}
-\usepackage{xltabular}
-\usepackage{longtable,booktabs,multirow,multicol,colortbl}
+\usepackage{empheq}
+\usepackage{ragged2e}
+\usepackage{xltabular,longtable,booktabs,multirow,multicol,colortbl}
 
-\usepackage{caption}
-% Make caption package work with longtable
+% \usepackage{caption}
+% % Make caption package work with longtable
+% \makeatletter
+% \def\fnum@table{\tablename~\thetable}
+% \makeatother
+
+% highlight stuff using \hlc
+\usepackage{soul}
+\sethlcolor{ubdyellow}
 \makeatletter
-\def\fnum@table{\tablename~\thetable}
+\let\HL\hl
+\renewcommand\hl{%
+  \let\set@color\beamerorig@set@color
+  \let\reset@color\beamerorig@reset@color
+  \HL}
 \makeatother
-
-\usepackage{lipsum}
-\usepackage{csquotes}
+% https://tex.stackexchange.com/questions/460731/highlight-color-a-part-of-text-in-block-in-beamer
+\newcommand{\hlc}[2][ubdyellow]{{%
+    \colorlet{foo}{#1}%
+    \sethlcolor{foo}\hl{#2}}%
+}
+% https://tex.stackexchange.com/questions/352956/how-to-highlight-text-with-an-arbitrary-color
 
 % To use arabic ----------------------------------------------------------------
 % WARNING: Using arabic script causes some issues with footnotes.
@@ -147,9 +131,14 @@ $endif$
 \setdefaultlanguage{english}
 \setotherlanguage{arabic} % to use arabic
 \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% Note that when arabic is set, the itemize becomes triangles
+\setbeamertemplate{itemize item}[circ]
+\setbeamertemplate{itemize subitem}[circ]
+\setbeamertemplate{itemize subsubitem}[circ]
 \usepackage{xeCJK}
 \setCJKmainfont{SimSun}
-% \usepackage{fontspec}
+\setCJKsansfont{FangSong}
+\setCJKmonofont{KaiTi}
 
 % % Fix for footnotes not showing when arabic script used
 % % https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
@@ -162,48 +151,25 @@ $endif$
 % \renewcommand{\footnote}{\only<+->\oldfootnote}
 % % https://stackoverflow.com/questions/62345074/show-footnote-only-after-a-pause-in-beamer-with-r-markdown
 
-% Fonts ------------------------------------------------------------------------
-\usepackage{cmbright}
-\usefonttheme{default}
-\usepackage{pifont}% http://ctan.org/pkg/pifont
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
-
 % Bibliography -----------------------------------------------------------------
 $if(bibliography)$
-\usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
-\renewcommand*{\mkbibacro}[1]{#1}
+\usepackage[$if(bibstyle)$style=$bibstyle$$endif$,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
+\renewcommand*{\mkbibacro}[1]{#1}  % fix URL, DOI, ISBN, etc. font
 $endif$
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
 
-% Fix URL, DOI, ISBN, etc. font in biblatex
-% https://tex.stackexchange.com/questions/416093/change-font-of-the-word-url-before-the-actual-url-in-biblatex
-% \renewcommand*{\mkbibacro}[1]{#1}  
-
-\newcommand{\thankyou}{%
-	{
-		\begin{frame}[plain,noframenumbering]{End}
-			\centering
-			\Huge Thank you!
-		\end{frame}
-	}
-
-}
-
 % ------------------------------------------------------------------------------
 % Mathematics ------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
-\newcommand*\mybox[1]{%
-\colorbox{navyblue!35}{#1}}
-
+% coloured box around theorems etc.
 \usepackage[skins,theorems]{tcolorbox}
 \tcbset{highlight math style={enhanced,
-  colframe=navyblue,colback=white,arc=2pt,boxrule=1pt}}
+  colframe=ubdblue,colback=white,arc=2pt,boxrule=1pt}}
 
-\usepackage{amssymb}
+\usepackage{amsmath,amssymb}
 \usepackage{dsfont}  % for indicator variables \mathsds{1}
 \usepackage{bm}  % for better bold script
 \usepackage[makeroom]{cancel}
@@ -342,7 +308,6 @@ $endfor$
 \DeclareMathOperator{\Lik}{L}
 \DeclareMathOperator{\Leb}{Leb}
 
-
 % Blackboard bold
 \newcommand{\bbR}{\mathbb{R}}
 \newcommand{\bbN}{\mathbb{N}}
@@ -394,7 +359,7 @@ $endfor$
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
-% Comments grey text
+% Comments gray text
 \newcommand{\mycomment}[2][10pt]{\hspace{#1}\rlap{\color{gray}\text{#2}}}
 
 % Derivatives and integration
@@ -410,49 +375,14 @@ $endfor$
   <8-9> matha8 <9-10> matha9
   <10-12> matha10 <12-> matha12
   }{}
-% \DeclareFontShape{U}{matha}{m}{n}{
-%   <5> <6> <7> <8> <9> <10> gen * matha
-%   <10.95> matha10 <12> <14.4> <17.28>
-%   <20.74> <24.88> matha12
-%   }{}
-
 \DeclareSymbolFont{matha}{U}{matha}{m}{n}
 \DeclareMathSymbol{\Lt}{3}{matha}{"CE}
-
-\graphicspath{ {figure/} }
-
-$if(csl-refs)$
-\newlength{\cslhangindent}
-\setlength{\cslhangindent}{1.5em}
-\newlength{\csllabelwidth}
-\setlength{\csllabelwidth}{3em}
-\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
- {% don't indent paragraphs
-  \setlength{\parindent}{0pt}
-  % turn on hanging indent if param 1 is 1
-  \ifodd #1 \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces\fi
-  % set entry spacing
-  \ifnum #2 > 0
-  \setlength{\parskip}{#2\baselineskip}
-  \fi
- }%
- {}
-\usepackage{calc}
-\newcommand{\CSLBlock}[1]{#1\hfill\break}
-\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
-\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
-\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
-$endif$
-
-\setbeamertemplate{itemize item}[circ]
-\setbeamertemplate{itemize subitem}[circ]
-\setbeamertemplate{itemize subsubitem}[circ]
-
-\newenvironment{onlyhandout}{\only<handout>{}{}}
 
 $for(header-includes)$
 $header-includes$
 $endfor$
+
+\graphicspath{ {figure/} }
 
 \begin{document}
 
@@ -473,6 +403,7 @@ $if(toc)$
   $endif$
 \end{frame}
 $endif$
+
 $body$
 
 $if(thankyou)$

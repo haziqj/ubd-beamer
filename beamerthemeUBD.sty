@@ -266,18 +266,18 @@
 % \usepackage{roboto}  % alternative
 % \usepackage{eulervm}  % math font
 
-% font fix (not needed really)
-% \usepackage{ifxetex,ifluatex}
-% \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-%   \usepackage[T1]{fontenc}
-%   \usepackage[utf8]{inputenc}
-%   \usepackage{textcomp} % provide euro and other symbols
-% \else % if luatex or xetex
-%   \usepackage{unicode-math}
-%   \defaultfontfeatures{Scale=MatchLowercase}
-%   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-% \fi
-
+% font fix (not sure needed)
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  % \usepackage[T1]{fontenc}
+  % \usepackage[utf8]{inputenc}
+  % \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  % \usepackage{unicode-math}
+  % \defaultfontfeatures{Scale=MatchLowercase}
+  % \defaultfontfeatures[\sffamily]{Ligatures=TeX,Scale=1}
+  \usepackage{fontspec}
+\fi
 
 \setbeamerfont{title}{series=\bfseries, size=\LARGE}  %family=\rmfamily, 
 \setbeamerfont{subtitle}{series=\mdseries, size=\large}

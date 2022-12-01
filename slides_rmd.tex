@@ -1,8 +1,5 @@
 \documentclass[,aspectratio=43]{beamer}
 
-\usepackage{empheq}
-\usepackage{ragged2e}
-
 % ------------------------------------------------------------------------------
 % Load theme -------------------------------------------------------------------
 % ------------------------------------------------------------------------------
@@ -22,34 +19,9 @@
 
 \date{\today}
 
-% Font fix ---------------------------------------------------------------------
-% \usepackage{ifxetex,ifluatex}
-% \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-%   \usepackage[T1]{fontenc}
-%   \usepackage[utf8]{inputenc}
-%   \usepackage{textcomp} % provide euro and other symbols
-% \else % if luatex or xetex
-%   \usepackage{unicode-math}
-%   \defaultfontfeatures{Scale=MatchLowercase}
-%   \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
-% \fi
-
-\usepackage{soul}
-\makeatletter
-\let\HL\hl
-\renewcommand\hl{%
-  \let\set@color\beamerorig@set@color
-  \let\reset@color\beamerorig@reset@color
-  \HL}
-\makeatother
-% https://tex.stackexchange.com/questions/460731/highlight-color-a-part-of-text-in-block-in-beamer
-\newcommand{\hlc}[2][yellow]{{%
-    \colorlet{foo}{#1}%
-    \sethlcolor{foo}\hl{#2}}%
-}
-% https://tex.stackexchange.com/questions/352956/how-to-highlight-text-with-an-arbitrary-color
-
+% ------------------------------------------------------------------------------
 % knitr stuff ------------------------------------------------------------------
+% ------------------------------------------------------------------------------
 \usepackage{color}
 \usepackage{fancyvrb}
 \newcommand{\VerbBar}{|}
@@ -57,7 +29,7 @@
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
 % Add ',fontsize=\small' for more characters per line
 \usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
+\definecolor{shadecolor}{HTML}{F5F5F5}
 \newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
 \newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
 \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
@@ -112,20 +84,32 @@
 % Packages ---------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
-% \setlength{\parskip}{1em}
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric,fit,arrows.meta}
-\usepackage{xltabular}
-\usepackage{longtable,booktabs,multirow,multicol,colortbl}
+\usepackage{empheq}
+\usepackage{ragged2e}
+\usepackage{xltabular,longtable,booktabs,multirow,multicol,colortbl}
 
-\usepackage{caption}
-% Make caption package work with longtable
+% \usepackage{caption}
+% % Make caption package work with longtable
+% \makeatletter
+% \def\fnum@table{\tablename~\thetable}
+% \makeatother
+
+% highlight stuff using \hlc
+\usepackage{soul}
+\sethlcolor{ubdyellow}
 \makeatletter
-\def\fnum@table{\tablename~\thetable}
+\let\HL\hl
+\renewcommand\hl{%
+  \let\set@color\beamerorig@set@color
+  \let\reset@color\beamerorig@reset@color
+  \HL}
 \makeatother
-
-\usepackage{lipsum}
-\usepackage{csquotes}
+% https://tex.stackexchange.com/questions/460731/highlight-color-a-part-of-text-in-block-in-beamer
+\newcommand{\hlc}[2][ubdyellow]{{%
+    \colorlet{foo}{#1}%
+    \sethlcolor{foo}\hl{#2}}%
+}
+% https://tex.stackexchange.com/questions/352956/how-to-highlight-text-with-an-arbitrary-color
 
 % To use arabic ----------------------------------------------------------------
 % WARNING: Using arabic script causes some issues with footnotes.
@@ -134,9 +118,14 @@
 \setdefaultlanguage{english}
 \setotherlanguage{arabic} % to use arabic
 \newfontfamily\arabicfontsf[Script=Arabic]{Amiri}
+% Note that when arabic is set, the itemize becomes triangles
+\setbeamertemplate{itemize item}[circ]
+\setbeamertemplate{itemize subitem}[circ]
+\setbeamertemplate{itemize subsubitem}[circ]
 \usepackage{xeCJK}
 \setCJKmainfont{SimSun}
-% \usepackage{fontspec}
+\setCJKsansfont{FangSong}
+\setCJKmonofont{KaiTi}
 
 % % Fix for footnotes not showing when arabic script used
 % % https://tex.stackexchange.com/questions/228075/beamer-in-arabic-language-doesnt-accept-footnotes
@@ -149,44 +138,21 @@
 % \renewcommand{\footnote}{\only<+->\oldfootnote}
 % % https://stackoverflow.com/questions/62345074/show-footnote-only-after-a-pause-in-beamer-with-r-markdown
 
-% Fonts ------------------------------------------------------------------------
-\usepackage{cmbright}
-\usefonttheme{default}
-\usepackage{pifont}% http://ctan.org/pkg/pifont
-\newcommand{\cmark}{\ding{51}}%
-\newcommand{\xmark}{\ding{55}}%
-
 % Bibliography -----------------------------------------------------------------
-\usepackage[style=authoryear,giveninits=true,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
-\renewcommand*{\mkbibacro}[1]{#1}
+\usepackage[style=authoryear,maxcitenames=2,maxbibnames=99,backend=biber,natbib]{biblatex}
+\renewcommand*{\mkbibacro}[1]{#1}  % fix URL, DOI, ISBN, etc. font
 \addbibresource{refs.bib}
-
-% Fix URL, DOI, ISBN, etc. font in biblatex
-% https://tex.stackexchange.com/questions/416093/change-font-of-the-word-url-before-the-actual-url-in-biblatex
-% \renewcommand*{\mkbibacro}[1]{#1}  
-
-\newcommand{\thankyou}{%
-	{
-		\begin{frame}[plain,noframenumbering]{End}
-			\centering
-			\Huge Thank you!
-		\end{frame}
-	}
-
-}
 
 % ------------------------------------------------------------------------------
 % Mathematics ------------------------------------------------------------------
 % ------------------------------------------------------------------------------
 
-\newcommand*\mybox[1]{%
-\colorbox{navyblue!35}{#1}}
-
+% coloured box around theorems etc.
 \usepackage[skins,theorems]{tcolorbox}
 \tcbset{highlight math style={enhanced,
-  colframe=navyblue,colback=white,arc=2pt,boxrule=1pt}}
+  colframe=ubdblue,colback=white,arc=2pt,boxrule=1pt}}
 
-\usepackage{amssymb}
+\usepackage{amsmath,amssymb}
 \usepackage{dsfont}  % for indicator variables \mathsds{1}
 \usepackage{bm}  % for better bold script
 \usepackage[makeroom]{cancel}
@@ -325,7 +291,6 @@
 \DeclareMathOperator{\Lik}{L}
 \DeclareMathOperator{\Leb}{Leb}
 
-
 % Blackboard bold
 \newcommand{\bbR}{\mathbb{R}}
 \newcommand{\bbN}{\mathbb{N}}
@@ -377,7 +342,7 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 
-% Comments grey text
+% Comments gray text
 \newcommand{\mycomment}[2][10pt]{\hspace{#1}\rlap{\color{gray}\text{#2}}}
 
 % Derivatives and integration
@@ -393,24 +358,13 @@
   <8-9> matha8 <9-10> matha9
   <10-12> matha10 <12-> matha12
   }{}
-% \DeclareFontShape{U}{matha}{m}{n}{
-%   <5> <6> <7> <8> <9> <10> gen * matha
-%   <10.95> matha10 <12> <14.4> <17.28>
-%   <20.74> <24.88> matha12
-%   }{}
-
 \DeclareSymbolFont{matha}{U}{matha}{m}{n}
 \DeclareMathSymbol{\Lt}{3}{matha}{"CE}
 
+\usepackage{lipsum}
+\SetLipsumLanguage{english}
+
 \graphicspath{ {figure/} }
-
-
-\setbeamertemplate{itemize item}[circ]
-\setbeamertemplate{itemize subitem}[circ]
-\setbeamertemplate{itemize subsubitem}[circ]
-
-\newenvironment{onlyhandout}{\only<handout>{}{}}
-
 
 \begin{document}
 
@@ -421,17 +375,18 @@
 \begin{frame}[plain,noframenumbering]{Overview}
     \tableofcontents
   \end{frame}
+
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
 \begin{frame}{Introduction}
 The UBD Beamer Theme is a modern and minimal theme designed for getting
-information across in a clean and uncluttered manner.
+information across in a clean and uncluttered manner. \bigskip
 
 This theme is based on the
 \href{https://github.com/kailashbuki/beamerthemesaarland}{Saarland
 Beamer Theme}, with its logos and fonts changed, and colour scheme
-adapted to UBD's pastel-ised colour scheme.
+adapted to UBD's official brand colours.
 \end{frame}
 
 \hypertarget{features}{%
@@ -531,9 +486,7 @@ it may mean.
 
 \begin{frame}{Two columns}
 \protect\hypertarget{two-columns}{}
-We can also add two columns in the slides.
-
-\vspace{1em}
+We can also add two columns in the slides.\bigskip
 
 \begin{columns}[T]
 \begin{column}{0.48\textwidth}
@@ -567,11 +520,11 @@ I am a block in a column.
 \begin{itemize}
 \tightlist
 \item
-  \textcolor{ubdblue}{Blues: \texttt{ubdblue} a.k.a. Dark Cornflower
-  Blue (\#325494)}
+  \textcolor{ubdblue}{Blues: \texttt{ubdblue} a.k.a. Y In Mn Blue
+  (\#325494)}
 \item
-  \textcolor{ubdteal}{Teals: \texttt{ubdteal} a.k.a. Upsdell Red
-  (\#B10F2E)}
+  \textcolor{ubdteal}{Teals: \texttt{ubdteal} a.k.a. Medium Aquamarine
+  (\#58DDB3)}
 \item
   \textcolor{ubdyellow}{Yellows: \texttt{ubdyellow} a.k.a. Maize Crayola
   Red (\#F5C946)}
@@ -584,24 +537,74 @@ I am a block in a column.
 \item
   \textcolor{gray}{Grays: \texttt{gray} a.k.a. Spanish Gray (\#999999)}
 \end{itemize}
+
+\blfootnote{\url{https://coolors.co/palette/325494-58ddb3-f5c946-b10f2e-230c0f}}
+\end{frame}
+
+\begin{frame}[fragile]{Fonts}
+\protect\hypertarget{fonts}{}
+The font is left to the default beamer font (which I believe is the
+Computer Modern). In order to get the sans-serif fonts for the
+mathematics (including the greek letters), the following lines are
+called in the \texttt{.sty} file:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{\textbackslash{}usepackage}\NormalTok{\{}\ExtensionTok{cmbright}\NormalTok{\}}
+\FunctionTok{\textbackslash{}usefonttheme}\NormalTok{\{professionalfonts\}}
+\end{Highlighting}
+\end{Shaded}
+
+So compiling using pdf\LaTeX~should get the desired output. \medskip
+
+On the other hand, compiling with Xe\LaTeX~seems to mess up the fonts,
+probably because legacy fonts are loaded. There is a switch in the
+\texttt{.sty} file which loads \texttt{fontspec} package to fix this
+(kind of?).
 \end{frame}
 
 \hypertarget{mathematics}{%
 \subsection{Mathematics}\label{mathematics}}
 
 \begin{frame}{Mathematics}
-\protect\hypertarget{mathematics-1}{}
-Let \(X\sim\operatorname{Pois}(\lambda)\). The probability mass function
-of \(X\) is given by \begin{align}\label{eq:pois}
-    \Pr(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}.
-\end{align} Using the pmf given in \eqref{eq:pois}, we can derive the
-moment generating function for \(X\) to be: \begin{align*}
-    M_X(t) 
-    &= \sum_{k=0}^\infty e^{tx} \cdot \frac{e^{-\lambda}\lambda^x}{x!} \\
-    &= e^{-\lambda} \sum_{k=0}^\infty  \frac{(\lambda e^t)^x}{x!} \\
-    &= e^{-\lambda}  e^{\lambda e^t} \\
-    &= \exp\{\lambda(e^t - 1) \}.
-\end{align*}
+Let \(X\) be a simple random variable defined on
+\((\Omega,\mathcal F,\mathbb P)\) that takes on finitely many values
+\(\{x_1,\dots,x_n\}\). The expectation of \(X\),
+\(\operatorname{E}(X)\), is the Lebesgue integral of \(X\) with respect
+to \(\mathbb P\), \[
+\operatorname{E}(X) := \int X(\omega) \operatorname{d \mathbb P} = \sum_{i=1}^n x_i \operatorname{\mathbb P}(\omega \in A_i),
+\] where \(A_i=\{\omega\in\Omega \mid X(\omega)=x_i \}\).
+
+\vspace{-0.5em}
+
+\begin{gather*}
+AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv\\WwXxYyZz \\[0.5em]
+1234567890 \\[0.5em]
+\alpha
+ \beta
+\Gamma  \gamma
+\Delta  \delta
+\epsilon  \varepsilon   
+\zeta
+\eta
+\Theta \theta  \vartheta
+\iota
+\kappa  \varkappa
+\Lambda  \lambda
+\mu
+\nu
+\Xi  \xi
+\Pi \pi  \varpi
+\rho  
+\Sigma \sigma 
+\tau
+\Upsilon  \upsilon
+\Phi \phi  \varphi
+\chi
+\Psi  \psi
+\Omega  \omega \\[0.5em]
+\prod \oint \bigoplus \bigotimes \bigcup \bigcap 
+\end{gather*}
 \end{frame}
 
 \begin{frame}{Theorems et al.}
@@ -626,13 +629,27 @@ complete list of primes.
 \end{proof}
 \end{frame}
 
-\begin{frame}{A maths example}
-\protect\hypertarget{a-maths-example}{}
-Maths examples are continuously numbered (using the \texttt{example}
+\begin{frame}[fragile]{Example blocks}
+\protect\hypertarget{example-blocks}{}
+Example blocks are continuously numbered (using the \texttt{example}
 environment).
 
 \begin{example}[Examples of prime numbers]
-2, 3, 5, 7 and 11 are examples of prime numbers.
+The numbers
+
+\begin{itemize}
+\tightlist
+\item
+  2;
+\item
+  3;
+\item
+  5; and
+\item
+  7
+\end{itemize}
+
+are examples of prime numbers.
 \end{example}
 
 \begin{example}[Examples of non-prime numbers]
@@ -697,6 +714,8 @@ excellent fundamental textbooks every student of statistics should read:
 
 \begin{frame}[fragile]{Slide with Plot}
 \protect\hypertarget{slide-with-plot}{}
+\vspace{-1em}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }\AttributeTok{y =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)), }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
@@ -711,23 +730,77 @@ excellent fundamental textbooks every student of statistics should read:
 \section{Conclusion}\label{conclusion}}
 
 \begin{frame}[fragile]{Conclusion}
-\protect\hypertarget{conclusion-1}{}
-To use this theme, download the \texttt{ubd\_beamer\_rmd.tex} file,
-\texttt{.sty} files, and image files (for the logo and banner) from
-\url{https://github.com/haziqj/ubd-beamer}, and place the files together
-with your \texttt{.Rmd} source file. Use the sample
-\texttt{slides\_rmd.Rmd} as a guide.
+To use this theme, download and place the following files and folders
+into your working directory:
+
+\begin{enumerate}
+\tightlist
+\item
+  \texttt{beamerthemeUBD.sty} (the beamer theme)
+\item
+  \texttt{ubd\_beamer\_rmd.tex} (the Rmd beamer template)
+\item
+  \texttt{luafilters/} (the lua filters in the folder)
+\item
+  \texttt{ubd\_brand.pdf} (the university logo)
+\end{enumerate}
+
+To start, you may use the \texttt{slides\_rmd.Rmd} as a guide and edit
+from there.
+
+\begin{block}{For non-Rmd beamer}
+\protect\hypertarget{for-non-rmd-beamer}{}
+All you need is 1. and 4. (the Rmd template and lua filters are not
+necessary). See the file \texttt{minimal\_example.tex}.
+\end{block}
 \end{frame}
 
 \begin{frame}[plain,noframenumbering]{End}
-	\centering
-	\Huge
-  \textcolor{ubdblue}{Thank you!}
+\protect\hypertarget{end}{}
+\centering
+\Huge
+
+\textcolor{ubdblue}{Thank you!}
 \end{frame}
 
 \begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
-	\printbibliography[heading=none]
+\protect\hypertarget{references}{}
+\printbibliography[heading=none]
+
+\appendix
+\backupbegin
 \end{frame}
 
+\hypertarget{backup-slides}{%
+\section{Backup slides}\label{backup-slides}}
+
+\begin{frame}[fragile]{Backup slides}
+Often times in a presentation, we don't have enough time to present
+everything, but it's a good idea to prepare backup slides in case the
+audience asks about it afterwards.\bigskip
+
+We can achieve that using the \texttt{\textbackslash{}appendix} usage.
+\end{frame}
+
+\hypertarget{backup-topic-1}{%
+\section{Backup topic 1}\label{backup-topic-1}}
+
+\begin{frame}{Backup topic 1}
+\lipsum[1]
+\end{frame}
+
+\hypertarget{backup-topic-2}{%
+\section{Backup topic 2}\label{backup-topic-2}}
+
+\begin{frame}{Backup topic 2}
+\begin{block}{A block}
+\protect\hypertarget{a-block}{}
+\lipsum[4]
+\end{block}
+\end{frame}
+
+
+
+\backupend
 
 \end{document}		

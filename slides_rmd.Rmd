@@ -5,6 +5,7 @@ author: Haziq Jamil
 institute: |
   | Mathematical Sciences, Faculty of Science, UBD
   | \url{https://haziqj.ml}
+date: 
 output: 
   beamer_presentation:
     template: ubd_beamer_rmd.tex
@@ -14,23 +15,35 @@ output:
     citation_package: biblatex
     pandoc_args: ["--lua-filter=luafilters/mycustom.lua", "--lua-filter=luafilters/bookdown.lua"] 
 aspectratio: 43
+handout: false
 toc: true
 toctitle: Overview
 tocmulticol: 
+transitions: false
 progressdots: false
-handout: false
 bibliography: refs.bib
-refslide: true
-thankyou: true
-# header-includes:
-#   - \usepackage{lipsum}
+bibstyle: authoryear
+refslide: false
+thankyou: false
+header-includes:
+  - \usepackage{lipsum}
+  - \SetLipsumLanguage{english}
+include-after:
+  - \backupend
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, fig.height = 4, fig.width = 6, 
-                      cache = TRUE, warning = FALSE, message = FALSE,
-                      fig.path = "figure/", cache.path = "_cache/",
-                      fig.align = "center")
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE, 
+  warning = FALSE,
+  message = FALSE,
+  fig.height = 4, 
+  fig.width = 6, 
+  fig.path = "figure/", 
+  fig.align = "center",
+  cache = TRUE, 
+  cache.path = "_cache/"
+)
 options(width = 55)  # if 4:3 set to 55, otherwise 70
 library(tidyverse)
 theme_set(theme_classic())
@@ -38,9 +51,9 @@ theme_set(theme_classic())
 
 # Introduction
 
-The UBD Beamer Theme is a modern and minimal theme designed for getting information across in a clean and uncluttered manner.
-	
-This theme is based on the [Saarland Beamer Theme](https://github.com/kailashbuki/beamerthemesaarland), with its logos and fonts changed, and colour scheme adapted to UBD's pastel-ised colour scheme.
+The UBD Beamer Theme is a modern and minimal theme designed for getting information across in a clean and uncluttered manner. \bigskip
+
+This theme is based on the [Saarland Beamer Theme](https://github.com/kailashbuki/beamerthemesaarland), with its logos and fonts changed, and colour scheme adapted to UBD's official brand colours.
 
 # Features
 
@@ -95,9 +108,7 @@ This is an alternatively-coloured block using the `altblock` environment.
 
 ### Two columns
 
-We can also add two columns in the slides.
-
-\vspace{1em}
+We can also add two columns in the slides.\bigskip
 
 ::::: {.columns}
 
@@ -126,45 +137,69 @@ I am a block in a column.
 
 ## Colour palette
 
-- [Blues: `ubdblue` a.k.a. Dark Cornflower Blue (#325494)]{color=ubdblue}
-- [Teals: `ubdteal` a.k.a. Upsdell Red (#B10F2E)]{color=ubdteal}
+- [Blues: `ubdblue` a.k.a. Y In Mn Blue (#325494)]{color=ubdblue}
+- [Teals: `ubdteal` a.k.a. Medium Aquamarine (#58DDB3)]{color=ubdteal}
 - [Yellows: `ubdyellow` a.k.a. Maize Crayola Red (#F5C946)]{color=ubdyellow}
 - [Alerted text: `ubdred` a.k.a. Upsdell Red (#B10F2E)]{color=ubdred}
 - [Normal text: `ubdblack` a.k.a. Dark Sienna (#230C0F)]{color=ubdblack}
 - [Grays: `gray` a.k.a. Spanish Gray (#999999)]{color=gray}
-<!-- - [Frame background: `ubdblue` (#325494)]{color=ubdblue} -->
-<!-- - [Example block: `ubdteal` a.k.a. Upsdell Red (#B10F2E)]{color=ubdred} -->
 
+[https://coolors.co/palette/325494-58ddb3-f5c946-b10f2e-230c0f]{.blfootnote}
 
+### Fonts
 
+The font is left to the default beamer font (which I believe is the Computer Modern).
+In order to get the sans-serif fonts for the mathematics (including the greek letters), the following lines are called in the `.sty` file:
 
-<!-- - \color{navyblue} Frame titles: \texttt{navyblue} -->
-<!-- - \color{gray} Structure: \texttt{gray} -->
-<!-- - \color{charcoal} Standard block: \texttt{charcoal} -->
-<!-- - \color{solidpink} Alerted block: \texttt{solidpink} -->
-<!-- - \color{queenpink} Alerted block bg: \texttt{queenpink} -->
-<!-- - \color{myrtlegreen} Example block: \texttt{myrtlegreen} -->
-<!-- - \color{lightcyan} Example block: \texttt{lightcyan} -->
-<!-- - \color{orangecrayola} Misc 1: \texttt{orangecrayola} -->
-<!-- - \color{paradisepink} Misc 2: \texttt{paradisepink} -->
+```latex
+\usepackage{cmbright}
+\usefonttheme{professionalfonts}
+```
+
+So compiling using pdf\LaTeX\ should get the desired output. \medskip
+
+On the other hand, compiling with Xe\LaTeX\ seems to mess up the fonts, probably because legacy fonts are loaded.
+There is a switch in the `.sty` file which loads `fontspec` package to fix this (kind of?).
 
 ## Mathematics
 
-### Mathematics
+Let $X$ be a simple random variable defined on $(\Omega,\mathcal F,\mathbb P)$ that takes on finitely many values $\{x_1,\dots,x_n\}$.
+The expectation of $X$, $\operatorname{E}(X)$, is the Lebesgue integral of $X$ with respect to $\mathbb P$,
+$$
+\operatorname{E}(X) := \int X(\omega) \operatorname{d \mathbb P} = \sum_{i=1}^n x_i \operatorname{\mathbb P}(\omega \in A_i),
+$$
+where $A_i=\{\omega\in\Omega \mid X(\omega)=x_i \}$.
 
-Let $X\sim\operatorname{Pois}(\lambda)$. 
-The probability mass function of $X$ is given by
-\begin{align}\label{eq:pois}
-	\Pr(X=x) = \frac{e^{-\lambda}\lambda^x}{x!}.
-\end{align}
-Using the pmf given in \eqref{eq:pois}, we can derive the moment generating function for $X$ to be:
-\begin{align*}
-	M_X(t) 
-	&= \sum_{k=0}^\infty e^{tx} \cdot \frac{e^{-\lambda}\lambda^x}{x!} \\
-	&= e^{-\lambda} \sum_{k=0}^\infty  \frac{(\lambda e^t)^x}{x!} \\
-	&= e^{-\lambda}  e^{\lambda e^t} \\
-	&= \exp\{\lambda(e^t - 1) \}.
-\end{align*}
+\vspace{-0.5em}
+
+\begin{gather*}
+AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv\\WwXxYyZz \\[0.5em]
+1234567890 \\[0.5em]
+\alpha
+ \beta
+\Gamma  \gamma
+\Delta  \delta
+\epsilon  \varepsilon	
+\zeta
+\eta
+\Theta \theta  \vartheta
+\iota
+\kappa  \varkappa
+\Lambda  \lambda
+\mu
+\nu
+\Xi  \xi
+\Pi \pi  \varpi
+\rho  
+\Sigma \sigma 
+\tau
+\Upsilon  \upsilon
+\Phi \phi  \varphi
+\chi
+\Psi  \psi
+\Omega  \omega \\[0.5em]
+\prod \oint \bigoplus \bigotimes \bigcup \bigcap 
+\end{gather*}
 
 ### Theorems et al.
 
@@ -185,15 +220,21 @@ $$
 is divisible by some prime $p$.
 But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
 This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
-
 :::
 
-### A maths example
+### Example blocks
 
-Maths examples are continuously numbered (using the \texttt{example} environment).
+Example blocks are continuously numbered (using the `example` environment).
 	
 ::: {.example name="Examples of prime numbers"}
-2, 3, 5, 7 and 11 are examples of prime numbers.
+The numbers
+
+- 2;
+- 3;
+- 5; and
+- 7
+
+are examples of prime numbers.
 :::
 	
 ::: {.example name="Examples of non-prime numbers"}
@@ -241,6 +282,8 @@ summary(cars)
 
 ### Slide with Plot
 
+\vspace{-1em}
+
 ```{r slideplot, echo = TRUE, fig.height = 3}
 ggplot(tibble(x = rnorm(100), y = rnorm(100)), aes(x, y)) +
   geom_point()
@@ -248,6 +291,50 @@ ggplot(tibble(x = rnorm(100), y = rnorm(100)), aes(x, y)) +
 
 # Conclusion
 
-### Conclusion
+To use this theme, download and place the following files and folders into your working directory:
 
-To use this theme, download the `ubd_beamer_rmd.tex` file, `.sty` files, and image files (for the logo and banner) from \url{https://github.com/haziqj/ubd-beamer}, and place the files together with your `.Rmd` source file. Use the sample `slides_rmd.Rmd` as a guide.
+1. `beamerthemeUBD.sty` (the beamer theme)
+2. `ubd_beamer_rmd.tex` (the Rmd beamer template)
+3. `luafilters/` (the lua filters in the folder)
+4. `ubd_brand.pdf` (the university logo)
+
+To start, you may use the `slides_rmd.Rmd` as a guide and edit from there.
+
+::: {.block}
+#### For non-Rmd beamer
+All you need is 1. and 4. (the Rmd template and lua filters are not necessary). 
+See the file `minimal_example.tex`.
+:::
+
+
+### End {.plain .noframenumbering}
+
+\centering
+\Huge
+[Thank you!]{color=ubdblue}
+
+### References {.t .allowframebreaks .noframenumbering .plain}
+
+\printbibliography[heading=none]
+
+\appendix
+\backupbegin
+
+#  Backup slides
+
+Often times in a presentation, we don't have enough time to present everything, but it's a good idea to prepare backup slides in case the audience asks about it afterwards.\bigskip
+
+We can achieve that using the `\appendix` usage.
+
+# Backup topic 1
+
+\lipsum[1]
+
+# Backup topic 2
+
+::: {.block}
+#### A block
+
+\lipsum[4]
+
+:::
