@@ -1,5 +1,5 @@
 ---
-title: UBD Beamer Theme using RMarkdown
+title: UBD40 Beamer Theme using RMarkdown
 subtitle: An example presentation document with R code
 author: Haziq Jamil
 institute: |
@@ -73,7 +73,7 @@ This theme is based on the [Saarland Beamer Theme](https://github.com/kailashbuk
   - **1985**: UBD established, first campus in Gadong
   - **1995**: UBD moved to Tungku Link
   - **2009**: Introduction of [GenNEXT Programme](https://ubd.edu.bn/admission/undergraduate/gennext-degree-programme/)
-  - **2011**: Commencement of the first Discovery Year programme		
+  - **2011**: Commencement of the first Discovery Year programme
 - Credits: \url{https://ubd.edu.bn/} and Wikipedia
 
 ## Blocks
@@ -114,7 +114,7 @@ We can also add two columns in the slides.\bigskip
 
 :::: {.column width=48%}
 
-This is the first column. 
+This is the first column.
 In this column, we can also add a block for instance.
 
 ::: {.block}
@@ -137,6 +137,9 @@ I am a block in a column.
 
 ## Colour palette
 
+- [UBD40 Deep Red: `ubdrubydeep` (#B71757)]{color=ubdrubydeep}
+- [UBD40 Bright Red: `ubdrubybright` (#E81856)]{color=ubdrubybright}
+- [UBD40 Soft Red: `ubdrubysoft` (#F05A91)]{color=ubdrubysoft}
 - [Blues: `ubdblue` a.k.a. Y In Mn Blue (#325494)]{color=ubdblue}
 - [Teals: `ubdteal` a.k.a. Medium Aquamarine (#58DDB3)]{color=ubdteal}
 - [Yellows: `ubdyellow` a.k.a. Maize Crayola Red (#F5C946)]{color=ubdyellow}
@@ -148,7 +151,8 @@ I am a block in a column.
 
 ### Fonts
 
-The font is left to the default beamer font (which I believe is the Computer Modern).
+The font for UBD40 typography is Avenir Next, which is a sans-serif typeface.
+The `.otf` files are included in the `fonts/` folder.
 In order to get the sans-serif fonts for the mathematics (including the greek letters), the following lines are called in the `.sty` file:
 
 ```latex
@@ -156,12 +160,11 @@ In order to get the sans-serif fonts for the mathematics (including the greek le
 \usefonttheme{professionalfonts}
 ```
 
-So compiling using pdf\LaTeX\ should get the desired output. \medskip
-
-On the other hand, compiling with Xe\LaTeX\ seems to mess up the fonts, probably because legacy fonts are loaded.
-There is a switch in the `.sty` file which loads `fontspec` package to fix this (kind of?).
+Compiling using Xe\LaTeX\ is required to use the fonts via the `fontspec` package.
 
 ## Mathematics
+
+\vspace{0.5em}
 
 Let $X$ be a simple random variable defined on $(\Omega,\mathcal F,\mathbb P)$ that takes on finitely many values $\{x_1,\dots,x_n\}$.
 The expectation of $X$, $\operatorname{E}(X)$, is the Lebesgue integral of $X$ with respect to $\mathbb P$,
@@ -179,7 +182,7 @@ AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv\\WwXxYyZz \\[0.5em]
  \beta
 \Gamma  \gamma
 \Delta  \delta
-\epsilon  \varepsilon	
+\epsilon  \varepsilon
 \zeta
 \eta
 \Theta \theta  \vartheta
@@ -190,18 +193,20 @@ AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv\\WwXxYyZz \\[0.5em]
 \nu
 \Xi  \xi
 \Pi \pi  \varpi
-\rho  
-\Sigma \sigma 
+\rho
+\Sigma \sigma
 \tau
 \Upsilon  \upsilon
 \Phi \phi  \varphi
 \chi
 \Psi  \psi
 \Omega  \omega \\[0.5em]
-\prod \oint \bigoplus \bigotimes \bigcup \bigcap 
+\prod \oint \bigoplus \bigotimes \bigcup \bigcap
 \end{gather*}
 
 ### Theorems et al.
+
+\vspace{0.5em}
 
 ::: {.definition name="Prime numbers"}
 A prime number is a natural number greater than 1 that is not a product of two smaller natural numbers.
@@ -212,20 +217,17 @@ There are an infinite number of prime numbers.
 :::
 
 ::: {.proof}
-Suppose that there exist only a finite number of primes, $p_1,\dots,p_n$, say.
-The number 
+Assume $p_1, \dots, p_n$ are all the primes. Let 
 $$
-N = 1+p_1\cdots p_n
+N = 1 + p_1\cdots p_n.
 $$
-is divisible by some prime $p$.
-But $p$ cannot be any of $p_1,\dots,p_n$, since the latter all leave remainder 1 on dividing $N$.
-This contradicts our assumption that $p_1,\dots,p_n$ is the complete list of primes.
+Then $N$ is not divisible by any $p_i$, save for a remainder of one, and hence not divisible by any prime--a contradiction.
 :::
 
 ### Example blocks
 
 Example blocks are continuously numbered (using the `example` environment).
-	
+
 ::: {.example name="Examples of prime numbers"}
 The numbers
 
@@ -236,7 +238,7 @@ The numbers
 
 are examples of prime numbers.
 :::
-	
+
 ::: {.example name="Examples of non-prime numbers"}
 Since $4 = 2 \times 2$, it is not a prime.
 :::
@@ -275,14 +277,13 @@ f <- function(x) {
 ```
 
 ### Slide with R Output
+\framesubtitle{A subtitle}
 
 ```{r cars, echo = TRUE}
 summary(cars)
 ```
 
 ### Slide with Plot
-
-\vspace{-1em}
 
 ```{r slideplot, echo = TRUE, fig.height = 3}
 ggplot(tibble(x = rnorm(100), y = rnorm(100)), aes(x, y)) +
@@ -296,13 +297,14 @@ To use this theme, download and place the following files and folders into your 
 1. `beamerthemeUBD.sty` (the beamer theme)
 2. `ubd_beamer_rmd.tex` (the Rmd beamer template)
 3. `luafilters/` (the lua filters in the folder)
-4. `ubd_brand.pdf` (the university logo)
+4. `logos/` (the logos in the folder)
+5. `fonts/` (the fonts in the folder)
 
 To start, you may use the `slides_rmd.Rmd` as a guide and edit from there.
 
 ::: {.block}
 #### For non-Rmd beamer
-All you need is 1. and 4. (the Rmd template and lua filters are not necessary). 
+All you need is 1, 4, and 5 (the Rmd template and lua filters are not necessary).
 See the file `minimal_example.tex`.
 :::
 
@@ -311,7 +313,7 @@ See the file `minimal_example.tex`.
 
 \centering
 \Huge
-[Thank you!]{color=ubdblue}
+[Thank you!]{color=ubdrubydeep}
 
 ### References {.t .allowframebreaks .noframenumbering .plain}
 

@@ -8,9 +8,9 @@
 % Information for the title page -----------------------------------------------
 \author{Haziq Jamil}
 
-\title{UBD Beamer Theme using RMarkdown}
+\title{UBD40 Beamer Theme using RMarkdown}
 
-\title{UBD Beamer Theme using RMarkdown}
+\title{UBD40 Beamer Theme using RMarkdown}
 
 \subtitle{An example presentation document with R code}
 
@@ -376,8 +376,7 @@
     \tableofcontents
   \end{frame}
 
-\hypertarget{introduction}{%
-\section{Introduction}\label{introduction}}
+\section{Introduction}\label{introduction}
 
 \begin{frame}{Introduction}
 The UBD Beamer Theme is a modern and minimal theme designed for getting
@@ -389,14 +388,12 @@ Beamer Theme}, with its logos and fonts changed, and colour scheme
 adapted to UBD's official brand colours.
 \end{frame}
 
-\hypertarget{features}{%
-\section{Features}\label{features}}
+\section{Features}\label{features}
 
-\hypertarget{lists}{%
-\subsection{Lists}\label{lists}}
+\subsection{Lists}\label{lists}
 
 \begin{frame}{Slide full of lists}
-\protect\hypertarget{slide-full-of-lists}{}
+\phantomsection\label{slide-full-of-lists}
 \emph{Universiti Brunei Darussalam} (UBD; translation University of
 Brunei Darussalam; Jawi: \textarabic{يونيبرسيتي بروني دارالسلام}) is the
 first university in Brunei.
@@ -433,19 +430,18 @@ first university in Brunei.
     \href{https://ubd.edu.bn/admission/undergraduate/gennext-degree-programme/}{GenNEXT
     Programme}
   \item
-    \textbf{2011}: Commencement of the first Discovery Year programme\\
+    \textbf{2011}: Commencement of the first Discovery Year programme
   \end{itemize}
 \item
   Credits: \url{https://ubd.edu.bn/} and Wikipedia
 \end{itemize}
 \end{frame}
 
-\hypertarget{blocks}{%
-\subsection{Blocks}\label{blocks}}
+\subsection{Blocks}\label{blocks}
 
 \begin{frame}[fragile]{Blocks}
 \begin{block}{Standard Block}
-\protect\hypertarget{standard-block}{}
+\phantomsection\label{standard-block}
 This is a standard block using the \texttt{block} environment.
 \end{block}
 
@@ -466,11 +462,10 @@ environment.
 \end{altblock}
 \end{frame}
 
-\hypertarget{quotes}{%
-\subsection{Quotes}\label{quotes}}
+\subsection{Quotes}\label{quotes}
 
 \begin{frame}{Quotation}
-\protect\hypertarget{quotation}{}
+\phantomsection\label{quotation}
 \begin{quote}
 Archimedes will be remembered when Aeschylus is forgotten, because
 languages die and mathematical ideas do not. ``Immortality'' may be a
@@ -481,11 +476,10 @@ it may mean.
 \hfill --- G. H. Hardy in \emph{A Mathematician's Apology, 1941}
 \end{frame}
 
-\hypertarget{columns}{%
-\subsection{Columns}\label{columns}}
+\subsection{Columns}\label{columns}
 
 \begin{frame}{Two columns}
-\protect\hypertarget{two-columns}{}
+\phantomsection\label{two-columns}
 We can also add two columns in the slides.\bigskip
 
 \begin{columns}[T]
@@ -494,7 +488,7 @@ This is the first column. In this column, we can also add a block for
 instance.
 
 \begin{block}{Block}
-\protect\hypertarget{block}{}
+\phantomsection\label{block}
 I am a block in a column.
 \end{block}
 \end{column}
@@ -513,12 +507,20 @@ I am a block in a column.
 \end{columns}
 \end{frame}
 
-\hypertarget{colour-palette}{%
-\subsection{Colour palette}\label{colour-palette}}
+\subsection{Colour palette}\label{colour-palette}
 
 \begin{frame}[fragile]{Colour palette}
 \begin{itemize}
 \tightlist
+\item
+  \textcolor{ubdrubydeep}{UBD40 Deep Red: \texttt{ubdrubydeep}
+  (\#B71757)}
+\item
+  \textcolor{ubdrubybright}{UBD40 Bright Red: \texttt{ubdrubybright}
+  (\#E81856)}
+\item
+  \textcolor{ubdrubysoft}{UBD40 Soft Red: \texttt{ubdrubysoft}
+  (\#F05A91)}
 \item
   \textcolor{ubdblue}{Blues: \texttt{ubdblue} a.k.a. Y In Mn Blue
   (\#325494)}
@@ -542,11 +544,12 @@ I am a block in a column.
 \end{frame}
 
 \begin{frame}[fragile]{Fonts}
-\protect\hypertarget{fonts}{}
-The font is left to the default beamer font (which I believe is the
-Computer Modern). In order to get the sans-serif fonts for the
-mathematics (including the greek letters), the following lines are
-called in the \texttt{.sty} file:
+\phantomsection\label{fonts}
+The font for UBD40 typography is Avenir Next, which is a sans-serif
+typeface. The \texttt{.otf} files are included in the \texttt{fonts/}
+folder. In order to get the sans-serif fonts for the mathematics
+(including the greek letters), the following lines are called in the
+\texttt{.sty} file:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -555,18 +558,15 @@ called in the \texttt{.sty} file:
 \end{Highlighting}
 \end{Shaded}
 
-So compiling using pdf\LaTeX~should get the desired output. \medskip
-
-On the other hand, compiling with Xe\LaTeX~seems to mess up the fonts,
-probably because legacy fonts are loaded. There is a switch in the
-\texttt{.sty} file which loads \texttt{fontspec} package to fix this
-(kind of?).
+Compiling using Xe\LaTeX~is required to use the fonts via the
+\texttt{fontspec} package.
 \end{frame}
 
-\hypertarget{mathematics}{%
-\subsection{Mathematics}\label{mathematics}}
+\subsection{Mathematics}\label{mathematics}
 
 \begin{frame}{Mathematics}
+\vspace{0.5em}
+
 Let \(X\) be a simple random variable defined on
 \((\Omega,\mathcal F,\mathbb P)\) that takes on finitely many values
 \(\{x_1,\dots,x_n\}\). The expectation of \(X\),
@@ -584,7 +584,7 @@ AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv\\WwXxYyZz \\[0.5em]
  \beta
 \Gamma  \gamma
 \Delta  \delta
-\epsilon  \varepsilon   
+\epsilon  \varepsilon
 \zeta
 \eta
 \Theta \theta  \vartheta
@@ -595,20 +595,22 @@ AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVv\\WwXxYyZz \\[0.5em]
 \nu
 \Xi  \xi
 \Pi \pi  \varpi
-\rho  
-\Sigma \sigma 
+\rho
+\Sigma \sigma
 \tau
 \Upsilon  \upsilon
 \Phi \phi  \varphi
 \chi
 \Psi  \psi
 \Omega  \omega \\[0.5em]
-\prod \oint \bigoplus \bigotimes \bigcup \bigcap 
+\prod \oint \bigoplus \bigotimes \bigcup \bigcap
 \end{gather*}
 \end{frame}
 
 \begin{frame}{Theorems et al.}
-\protect\hypertarget{theorems-et-al.}{}
+\phantomsection\label{theorems-et-al.}
+\vspace{0.5em}
+
 \begin{definition}[Prime numbers]
 A prime number is a natural number greater than 1 that is not a product
 of two smaller natural numbers.
@@ -619,18 +621,15 @@ There are an infinite number of prime numbers.
 \end{theorem}
 
 \begin{proof}
-Suppose that there exist only a finite number of primes,
-\(p_1,\dots,p_n\), say. The number \[
-N = 1+p_1\cdots p_n
-\] is divisible by some prime \(p\). But \(p\) cannot be any of
-\(p_1,\dots,p_n\), since the latter all leave remainder 1 on dividing
-\(N\). This contradicts our assumption that \(p_1,\dots,p_n\) is the
-complete list of primes.
+Assume \(p_1, \dots, p_n\) are all the primes. Let \[
+N = 1 + p_1\cdots p_n.
+\] Then \(N\) is not divisible by any \(p_i\), save for a remainder of
+one, and hence not divisible by any prime--a contradiction.
 \end{proof}
 \end{frame}
 
 \begin{frame}[fragile]{Example blocks}
-\protect\hypertarget{example-blocks}{}
+\phantomsection\label{example-blocks}
 Example blocks are continuously numbered (using the \texttt{example}
 environment).
 
@@ -657,8 +656,7 @@ Since \(4 = 2 \times 2\), it is not a prime.
 \end{example}
 \end{frame}
 
-\hypertarget{citations}{%
-\subsection{Citations}\label{citations}}
+\subsection{Citations}\label{citations}
 
 \begin{frame}{Citations}
 The importance of grounding one's self in elementary probability theory
@@ -670,11 +668,10 @@ excellent fundamental textbooks every student of statistics should read:
 \blfootnote{It is highly suggested to use pandoc's way of generating bibliographies (see \href{https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html}{here}) rather than using Biblatex. This footnote was created using the custom \texttt{\textbackslash blfootnote\{\}} command.}
 \end{frame}
 
-\hypertarget{using-r}{%
-\subsection{\texorpdfstring{Using \texttt{R}}{Using R}}\label{using-r}}
+\subsection{\texorpdfstring{Using \texttt{R}}{Using R}}\label{using-r}
 
 \begin{frame}[fragile]{Syntax highlighting}
-\protect\hypertarget{syntax-highlighting}{}
+\phantomsection\label{syntax-highlighting}
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{f }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x) \{}
@@ -694,7 +691,9 @@ excellent fundamental textbooks every student of statistics should read:
 \end{frame}
 
 \begin{frame}[fragile]{Slide with R Output}
-\protect\hypertarget{slide-with-r-output}{}
+\phantomsection\label{slide-with-r-output}
+\framesubtitle{A subtitle}
+
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{summary}\NormalTok{(cars)}
@@ -713,9 +712,7 @@ excellent fundamental textbooks every student of statistics should read:
 \end{frame}
 
 \begin{frame}[fragile]{Slide with Plot}
-\protect\hypertarget{slide-with-plot}{}
-\vspace{-1em}
-
+\phantomsection\label{slide-with-plot}
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{tibble}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{), }\AttributeTok{y =} \FunctionTok{rnorm}\NormalTok{(}\DecValTok{100}\NormalTok{)), }\FunctionTok{aes}\NormalTok{(x, y)) }\SpecialCharTok{+}
@@ -726,8 +723,7 @@ excellent fundamental textbooks every student of statistics should read:
 \begin{center}\includegraphics{figure/slideplot-1} \end{center}
 \end{frame}
 
-\hypertarget{conclusion}{%
-\section{Conclusion}\label{conclusion}}
+\section{Conclusion}\label{conclusion}
 
 \begin{frame}[fragile]{Conclusion}
 To use this theme, download and place the following files and folders
@@ -742,37 +738,38 @@ into your working directory:
 \item
   \texttt{luafilters/} (the lua filters in the folder)
 \item
-  \texttt{ubd\_brand.pdf} (the university logo)
+  \texttt{logos/} (the logos in the folder)
+\item
+  \texttt{fonts/} (the fonts in the folder)
 \end{enumerate}
 
 To start, you may use the \texttt{slides\_rmd.Rmd} as a guide and edit
 from there.
 
 \begin{block}{For non-Rmd beamer}
-\protect\hypertarget{for-non-rmd-beamer}{}
-All you need is 1. and 4. (the Rmd template and lua filters are not
+\phantomsection\label{for-non-rmd-beamer}
+All you need is 1, 4, and 5 (the Rmd template and lua filters are not
 necessary). See the file \texttt{minimal\_example.tex}.
 \end{block}
 \end{frame}
 
 \begin{frame}[plain,noframenumbering]{End}
-\protect\hypertarget{end}{}
+\phantomsection\label{end}
 \centering
 \Huge
 
-\textcolor{ubdblue}{Thank you!}
+\textcolor{ubdrubydeep}{Thank you!}
 \end{frame}
 
 \begin{frame}[t,allowframebreaks,noframenumbering,plain]{References}
-\protect\hypertarget{references}{}
+\phantomsection\label{references}
 \printbibliography[heading=none]
 
 \appendix
 \backupbegin
 \end{frame}
 
-\hypertarget{backup-slides}{%
-\section{Backup slides}\label{backup-slides}}
+\section{Backup slides}\label{backup-slides}
 
 \begin{frame}[fragile]{Backup slides}
 Often times in a presentation, we don't have enough time to present
@@ -782,19 +779,17 @@ audience asks about it afterwards.\bigskip
 We can achieve that using the \texttt{\textbackslash{}appendix} usage.
 \end{frame}
 
-\hypertarget{backup-topic-1}{%
-\section{Backup topic 1}\label{backup-topic-1}}
+\section{Backup topic 1}\label{backup-topic-1}
 
 \begin{frame}{Backup topic 1}
 \lipsum[1]
 \end{frame}
 
-\hypertarget{backup-topic-2}{%
-\section{Backup topic 2}\label{backup-topic-2}}
+\section{Backup topic 2}\label{backup-topic-2}
 
 \begin{frame}{Backup topic 2}
 \begin{block}{A block}
-\protect\hypertarget{a-block}{}
+\phantomsection\label{a-block}
 \lipsum[4]
 \end{block}
 \end{frame}
