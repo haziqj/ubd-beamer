@@ -37,6 +37,10 @@
 \definecolor{ubdblack}{HTML}{230C0F}
 \definecolor{ubdred}{HTML}{B10F2E}
 \definecolor{gray}{HTML}{999999}
+\definecolor{ubdrubydeep}{HTML}{b71757}
+\definecolor{ubdrubybright}{HTML}{e81856}
+\definecolor{ubdrubysoft}{HTML}{f05a91}
+\definecolor{ubddarkgrey}{HTML}{404041}
 
 % old colours
 \definecolor{navyblue}{RGB}{0, 47, 92}  % #002f5c 
@@ -50,15 +54,15 @@
 \definecolor{flame}{HTML}{fe5d26}
 
 % Main colours
-\setbeamercolor{structure}{fg=ubdblue,bg=white}
-\setbeamercolor{frametitle}{fg=ubdblue}
-\setbeamercolor{framesubtitle}{fg=ubdblue}
+\setbeamercolor{structure}{fg=ubdrubydeep,bg=white}
+\setbeamercolor{frametitle}{fg=ubdblack}
+\setbeamercolor{framesubtitle}{fg=ubdrubybright}
 \setbeamercolor{normal text}{fg=ubdblack}
-\setbeamercolor{alerted text}{fg=ubdred}
+\setbeamercolor{alerted text}{fg=ubdrubybright}
 
 % Block colours
-\setbeamercolor{block title}{fg=white,bg=ubdblue!100!ubdblack}
-\setbeamercolor{block body}{parent=normal text,bg=ubdblue!10,,fg=ubdblue!30!ubdblack}
+\setbeamercolor{block title}{fg=white,bg=ubddarkgrey!100!ubdblack}
+\setbeamercolor{block body}{parent=normal text,bg=ubddarkgrey!10,,fg=ubddarkgrey!30!ubdblack}
 
 \setbeamercolor{block title example}{fg=ubdteal!30!ubdblack,bg=ubdteal!90}
 \setbeamercolor{block body example}{parent=normal text,bg=ubdteal!10,fg=ubdteal!50!ubdblack}
@@ -67,8 +71,8 @@
   \setbeamercolor{itemize subitem}{fg=ubdteal!50!ubdblack}
 }
 
-\setbeamercolor{block title alerted}{fg=white,bg=ubdred}
-\setbeamercolor{block body alerted}{parent=normal text,bg=ubdred!10,fg=ubdred}
+\setbeamercolor{block title alerted}{fg=white,bg=ubdrubybright}
+\setbeamercolor{block body alerted}{parent=normal text,bg=ubdrubybright!10,fg=ubdrubybright}
 
 \setbeamercolor{title}{fg=ubdblue}
 \setbeamercolor{subtitle}{fg=ubdblue}
@@ -94,6 +98,7 @@
 \setbeamertemplate{itemize item}[circ]
 \setbeamertemplate{itemize subitem}[circ]
 \setbeamertemplate{itemize subsubitem}[circ]
+\setbeamercolor{item}{fg=ubddarkgrey}  % bullet color
 
 % ------------------------------------------------------------------------------
 % OUTER THEME ------------------------------------------------------------------
@@ -117,36 +122,47 @@
 \setbeamersize{text margin left=0.33cm}
 \setbeamersize{text margin right=0.33cm}
 
+
+
+
+
+
 % Customisation for the title page
-\titlegraphic{\includegraphics[width=1.75cm]{ubd_brand.pdf}}
+\pgfdeclarehorizontalshading{ubdrubygradient}{\paperheight}{%
+  color(0pt)=(ubdrubydeep);
+  color(0.3\paperwidth)=(ubdrubybright);
+  color(0.7\paperwidth)=(ubdrubybright);
+  color(\paperwidth)=(ubdrubysoft)
+}
+
+% Use the gradient on title page
+% \titlegraphic{\includegraphics[width=1.75cm]{ubd_brand.pdf}}
+
 \setbeamertemplate{title page}{%
 \begin{tikzpicture}[remember picture,overlay]
 
-\fill[ubdblue]
-  ([xshift=21pt]current page.north west) rectangle ([xshift=42pt,yshift=0.732\paperheight]current page.south west);
-\fill[ubdteal]
-  ([xshift=45pt]current page.north west) rectangle ([xshift=59.7pt,yshift=0.732\paperheight]current page.south west);
-\fill[ubdyellow]
-  ([xshift=62.7pt]current page.north west) rectangle ([xshift=70.4pt,yshift=0.732\paperheight]current page.south west);
+% Gradient fill background
+\shade[shading=ubdrubygradient]
+  (current page.south west) rectangle (current page.north east);
 
-\node[anchor=south west] 
-  at ([xshift=17pt,yshift=0.649\paperheight]current page.south west) (logo)
-  {\parbox{\paperwidth}{  
-  \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
-  }};
+% Top-right logo (white)
+\node[anchor=north east]
+  at ([xshift=-12pt,yshift=-10pt]current page.north east) {
+    \includegraphics[height=1.9cm]{logo/ubd40_white.png}
+};
 
-\fill[ubdblue]
-  ([xshift=21pt,yshift=0.64\paperheight]current page.south west) rectangle ([xshift=42pt]current page.south west);
-\fill[ubdteal]
-  ([xshift=45pt,yshift=0.64\paperheight]current page.south west) rectangle ([xshift=59.7pt]current page.south west);
-\fill[ubdyellow]
-  ([xshift=62.7pt,yshift=0.64\paperheight]current page.south west) rectangle ([xshift=70.4pt]current page.south west);
+% Bottom-right logo (futuring)
+\node[anchor=south east]
+  at ([xshift=-15pt,yshift=10pt]current page.south east) {
+    \includegraphics[width=2cm]{logo/ubd40_futuring.png}
+};
 
+% Title text
 \node[anchor=west]
-  at ([yshift=0\paperheight,xshift=70.4pt+15pt]current page.west) (title)
-  {\parbox[t]{\textwidth-85.5pt}{\raggedright%
-    \usebeamerfont{title}{\usebeamercolor[fg]{title}\inserttitle}\par
-    \usebeamerfont{subtitle}{\usebeamercolor[fg]{subtitle}\insertsubtitle}\par
+  at ([yshift=0\paperheight,xshift=25pt]current page.west) (title)
+  {\parbox[t]{\textwidth-25pt}{\raggedright\color{white}%
+    \usebeamerfont{title}\inserttitle\par
+    \usebeamerfont{subtitle}\insertsubtitle\par
     \bigskip
     \usebeamerfont{author}\insertauthor\par
     \usebeamerfont{institute}\insertinstitute\par
@@ -162,16 +178,14 @@
 \vspace{0.04\paperheight}
 \begin{tikzpicture}[remember picture,overlay]
 
-\fill[ubdblue]
-  ([xshift=21pt,yshift=0.04\paperheight]current page.south west) rectangle ([xshift=42pt]current page.south west);
-\fill[ubdteal]
-  ([xshift=45pt,yshift=0.04\paperheight]current page.south west) rectangle ([xshift=59.7pt]current page.south west);
-\fill[ubdyellow]
-  ([xshift=62.7pt,yshift=0.04\paperheight]current page.south west) rectangle ([xshift=70.4pt]current page.south west);
+\shade[shading=ubdrubygradient] (current page.south west) rectangle ([yshift=0.034\paperheight]current page.south east);
 
 \node[anchor=south] at ([yshift=0.4pt,xshift=32pt]current page.south west) (pagenumber) {\color{white}\scalebox{0.8}{\insertframenumber{} / \inserttotalframenumber}};
 
-\node[anchor=south east] at ([]current page.south east) (logo) {\includegraphics[height=0.032\paperheight]{ubd_brand.pdf}};
+\node[anchor=north east]
+  at ([xshift=1pt,yshift=1pt]current page.north east) {
+    \includegraphics[height=1.38cm]{logo/ubd40_ruby.png}
+};
 
 \end{tikzpicture}
 }
@@ -279,11 +293,30 @@
   \usepackage{fontspec}
 \fi
 
+% \usepackage[sfdefault]{noto-sans}  % clean and Google-styled
+
+\setsansfont[
+  Path = ./fonts/AvenirNext/,
+  UprightFont = *-Regular,
+  BoldFont = *-Bold,
+  ItalicFont = *-Italic,
+  BoldItalicFont = *-BoldItalic
+]{AvenirNext}
+
+\renewcommand{\familydefault}{\sfdefault} % use sans as default
+
+% \renewcommand{\familydefault}{\sfdefault} % use sans as default
+
+
 \setbeamerfont{title}{series=\bfseries, size=\LARGE}  %family=\rmfamily, 
 \setbeamerfont{subtitle}{series=\mdseries, size=\large}
 
 \setbeamerfont{frametitle}{series=\bfseries, size=\Large}
 \setbeamerfont{framesubtitle}{series=\mdseries, size=\large}
+
+
+% \setbeamerfont{title}{family=\fontspec{Nunito Sans}, series=\bfseries}
+% \setbeamerfont{frametitle}{family=\fontspec{Nunito Sans}}
 
 % Remove transition slides from navigation bullets
 %https://tex.stackexchange.com/questions/37127/how-to-remove-some-pages-from-the-navigation-bullets-in-beamer
