@@ -33,5 +33,5 @@ Edit the `slides_rmd.Rmd` to your liking.
 
 ## Beamer options
 
-- `progressdots` provides progress dots by sections at the top of each slide.
+- `progressdots` provides progress dots by sections at the top of each slide. (Not recommended, messes up with the top right logo!)
 - `transitions` provides transition slides between sections.
